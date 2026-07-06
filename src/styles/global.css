@@ -21,10 +21,14 @@
 }
 
 /* ---------- Top app bar ---------- */
+/* height/padding include the iOS status-bar safe area so the header sits below
+   the clock/battery when installed to the home screen (immersive PWA). In a
+   normal browser env(safe-area-inset-top) is 0, so nothing changes there. */
 .appbar {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; gap: 12px;
-  height: 56px; padding: 0 16px;
+  height: calc(56px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 16px 0;
   background: var(--paper);
   border-bottom: 1.5px solid var(--ink);
 }
