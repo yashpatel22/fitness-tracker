@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
   updateSplitDay, deleteSplitDay, createPreset, getStructure, invalidateStructure,
-  FOCUS, focusLabel, focusValue, presetLabel,
+  FOCUS, focusLabel, focusValue, presetLabel, isCustomPreset,
   type WorkoutPlan, type SplitDay, type PlannedExercise,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
@@ -167,10 +167,10 @@ export function MySplit() {
         if (!isEditing) {
           return (
             <section className="section" key={d.fit_splitdayid}>
-              <div className="card ms-card">
+              <div className={`card ms-card${isCustomPreset(d) ? ' custom' : ''}`}>
                 <div className="ms-head">
                   <div className="ms-head-main">
-                    <div className="ms-title">{presetLabel(d)}</div>
+                    <div className="ms-title">{presetLabel(d)}{isCustomPreset(d) && <span className="ms-badge">Custom</span>}</div>
                     <div className="ms-sub">{focusLabel(d.fit_focus)} · {exs.length} exercise{exs.length === 1 ? '' : 's'}</div>
                   </div>
                   <button className="btn secondary sm" onClick={() => startEdit(d)} disabled={!!editingId} data-telemetry-name="edit-preset"><IconEdit size={15} /> Edit</button>

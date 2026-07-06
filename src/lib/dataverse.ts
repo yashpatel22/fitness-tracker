@@ -23,6 +23,36 @@ type Row = Record<string, unknown>;
 const cache: Record<string, Row[]> = {};
 let ready: Promise<void> | null = null;
 
+// Bump when the seeded OOB preset content changes. On upgrade we reconcile the
+// out-of-the-box presets to match seed.json WITHOUT touching the user's custom
+// presets, sessions, set logs, PRs, or preferences.
+const SEED_VERSION = 2;
+// Every split-day GUID that ships in the current seed = the OOB preset set.
+const SEED_DAY_IDS = new Set((seed.splitDays as { fit_splitdayid: string }[]).map((d) => d.fit_splitdayid));
+// OOB split-day GUIDs that existed in an earlier seed but have since been
+// removed/merged (v1 shipped a duplicate "Arms" preset). Purge these on upgrade.
+const DEPRECATED_DAY_IDS = new Set<string>(['f8d4cabe-1973-f111-ab0f-6045bd049ce0']);
+
+// Reconcile the OOB presets to the current seed. Custom presets (GUIDs not in the
+// seed / deprecated sets) and ALL history are preserved; only OOB split days and
+// their planned exercises are replaced. Safe because set logs snapshot the
+// exercise (no FK to planned-exercise rows) and sessions link split days by GUID.
+async function reseedOOBPresets(): Promise<void> {
+  const idOf = (r: Row) => r.fit_splitdayid as string;
+  const managed = new Set<string>([...SEED_DAY_IDS, ...DEPRECATED_DAY_IDS]);
+
+  const customDays = table('fit_splitdaies').filter((d) => !managed.has(idOf(d)));
+  cache.fit_splitdaies = customDays.concat((seed.splitDays as Row[]).map((d) => ({ ...d })));
+
+  const customEx = table('fit_plannedexercises').filter(
+    (e) => !managed.has((e._fit_splitday_value as string) || ''),
+  );
+  cache.fit_plannedexercises = customEx.concat((seed.plannedExercises as Row[]).map((e) => ({ ...e })));
+
+  await persist('fit_splitdaies');
+  await persist('fit_plannedexercises');
+}
+
 function genId(): string {
   const c = (globalThis as unknown as { crypto?: Crypto }).crypto;
   if (c?.randomUUID) return c.randomUUID();
@@ -56,6 +86,13 @@ async function ensureReady(): Promise<void> {
       await persist('fit_splitdaies');
       await persist('fit_plannedexercises');
       await localforage.setItem('__seeded__', true);
+      await localforage.setItem('__seed_ver__', SEED_VERSION);
+    } else {
+      const ver = (await localforage.getItem<number>('__seed_ver__')) ?? 1;
+      if (ver < SEED_VERSION) {
+        await reseedOOBPresets();
+        await localforage.setItem('__seed_ver__', SEED_VERSION);
+      }
     }
     // Best-effort: ask the browser to keep our data durable (reduces eviction).
     try { await navigator.storage?.persist?.(); } catch { /* ignore */ }

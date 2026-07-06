@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSessions, createPreset, getStructure, invalidateStructure,
-  presetLabel, FOCUS, focusValue, weekRange, sessionDay,
+  presetLabel, isCustomPreset, FOCUS, focusValue, weekRange, sessionDay,
   STATUS_COMPLETED,
   type WorkoutPlan, type SplitDay, type PlannedExercise, type WorkoutSession,
 } from '../lib/fitness';
@@ -148,7 +148,8 @@ export function Today() {
         <div className="section-head"><h2>Start a workout</h2><span className="spacer" /><span className="pill">pick a preset</span></div>
         <div className="preset-grid">
           {presets.map((p) => (
-            <div key={p.fit_splitdayid} className="preset-tile" onClick={() => nav(`/day/${p.fit_splitdayid}`)} data-telemetry-name="open-preset">
+            <div key={p.fit_splitdayid} className={`preset-tile${isCustomPreset(p) ? ' custom' : ''}`} onClick={() => nav(`/day/${p.fit_splitdayid}`)} data-telemetry-name="open-preset">
+              {isCustomPreset(p) && <span className="pt-badge">Custom</span>}
               <div className="pt-name">{presetLabel(p)}</div>
               <div className="pt-sub">{exCount[p.fit_splitdayid] ?? 0} exercises</div>
               {missingMap[p.fit_splitdayid] > 0 && <div className="pt-gear">⚠ missing {missingMap[p.fit_splitdayid]} gear</div>}

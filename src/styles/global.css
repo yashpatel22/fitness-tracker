@@ -170,6 +170,10 @@
 .preset-tile.create:hover { border-color: var(--red); }
 .preset-tile.create .pt-plus { color: var(--red); margin-bottom: 4px; }
 .preset-tile.create .pt-name { color: var(--red); }
+/* Custom (user-created) presets get an accent rail + corner chip to set them apart from OOB presets. */
+.preset-tile { position: relative; }
+.preset-tile.custom { border-color: var(--red); box-shadow: inset 3px 0 0 var(--red); }
+.pt-badge { position: absolute; top: 8px; right: 8px; font-size: 0.54rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red); border: 1.5px solid var(--red); background: var(--paper); padding: 2px 6px; line-height: 1; }
 .pt-gear { margin-top: 6px; font-size: 0.66rem; font-weight: 800; color: var(--amber); text-transform: uppercase; letter-spacing: 0.02em; }
 
 /* ---------- Equipment selector (Presets tab) ---------- */
@@ -267,6 +271,8 @@
 .ms-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
 .ms-head-main { flex: 1; min-width: 0; }
 .ms-title { font-size: 1.15rem; font-weight: 800; line-height: 1.1; overflow-wrap: anywhere; }
+.ms-card.custom { border-color: var(--red); box-shadow: inset 3px 0 0 var(--red); }
+.ms-badge { display: inline-block; margin-left: 8px; vertical-align: middle; font-size: 0.54rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red); border: 1.5px solid var(--red); background: var(--paper); padding: 2px 6px; line-height: 1; }
 .ms-sub { font-size: 0.78rem; color: var(--ink-2); text-transform: capitalize; margin-top: 3px; }
 .ms-ro-list .list-row .grow .s { text-transform: capitalize; }
 .ms-empty { color: var(--ink-3); font-size: 0.85rem; padding: 4px 2px; }

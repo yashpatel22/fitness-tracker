@@ -17,19 +17,19 @@
     },
     {
       "fit_sortorder": 2,
-      "fit_dayofweek": 100000001,
-      "fit_splitdayid": "3e224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_dayofweek": null,
+      "fit_splitdayid": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
       "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Pull",
-      "fit_focus": 100000001
+      "fit_name": "Shoulders",
+      "fit_focus": 100000007
     },
     {
       "fit_sortorder": 3,
-      "fit_dayofweek": 100000002,
-      "fit_splitdayid": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
+      "fit_dayofweek": null,
+      "fit_splitdayid": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
       "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Legs",
-      "fit_focus": 100000002
+      "fit_name": "Chest",
+      "fit_focus": 100000005
     },
     {
       "fit_sortorder": 4,
@@ -42,37 +42,121 @@
     {
       "fit_sortorder": 5,
       "fit_dayofweek": null,
-      "fit_splitdayid": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Chest",
-      "fit_focus": 100000005
-    },
-    {
-      "fit_sortorder": 6,
-      "fit_dayofweek": null,
       "fit_splitdayid": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
       "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
       "fit_name": "Back",
       "fit_focus": 100000006
     },
     {
+      "fit_sortorder": 6,
+      "fit_dayofweek": 100000002,
+      "fit_splitdayid": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
+      "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Legs",
+      "fit_focus": 100000002
+    },
+    {
       "fit_sortorder": 7,
       "fit_dayofweek": null,
-      "fit_splitdayid": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
+      "fit_splitdayid": "bc377223-cad4-43cc-88b1-1dcf42381286",
       "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Shoulders",
-      "fit_focus": 100000007
+      "fit_name": "Push",
+      "fit_focus": 100000000
     },
     {
       "fit_sortorder": 8,
-      "fit_dayofweek": null,
-      "fit_splitdayid": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
+      "fit_dayofweek": 100000001,
+      "fit_splitdayid": "3e224902-8072-f111-ab0f-000d3a37eab2",
       "_fit_plan_value": "31224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Arms",
-      "fit_focus": 100000008
+      "fit_name": "Pull",
+      "fit_focus": 100000001
     }
   ],
   "plannedExercises": [
+    {
+      "fit_targetreps": "8-12",
+      "fit_plannedexerciseid": "f25b2362-c2c1-40a7-a18a-d0cb3ec18445",
+      "fit_sortorder": 1,
+      "fit_equipment": "barbell",
+      "fit_primarymuscle": "biceps",
+      "fit_exerciseexternalid": "Barbell_Curl",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Barbell Curl"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "c9a7fc3b-1e96-4fa8-a608-975f9bdd838f",
+      "fit_sortorder": 2,
+      "fit_equipment": "dumbbell",
+      "fit_primarymuscle": "biceps",
+      "fit_exerciseexternalid": "Hammer_Curls",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Hammer Curls"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "d1ffc255-94f0-49e8-8f56-ee27b84a6c2c",
+      "fit_sortorder": 3,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "biceps",
+      "fit_exerciseexternalid": "Cable_Preacher_Curl",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Preacher_Curl/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Cable Preacher Curl"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "7b793eda-014b-4181-a39a-42971b6c7cf8",
+      "fit_sortorder": 4,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "triceps",
+      "fit_exerciseexternalid": "Triceps_Pushdown",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Triceps Pushdown"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "98cf5157-2f74-4748-93b3-f4a6279e3c9d",
+      "fit_sortorder": 5,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "triceps",
+      "fit_exerciseexternalid": "Cable_Lying_Triceps_Extension",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Cable Triceps Extension"
+    },
+    {
+      "fit_targetreps": "10-15",
+      "fit_plannedexerciseid": "df1f70ff-01fe-43e0-b18a-196d211cd279",
+      "fit_sortorder": 6,
+      "fit_equipment": "body only",
+      "fit_primarymuscle": "triceps",
+      "fit_exerciseexternalid": "Bench_Dips",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Bench Dips"
+    },
+    {
+      "fit_targetreps": "12-15",
+      "fit_plannedexerciseid": "849f0022-7b03-4ed8-b28d-f8087d562ca3",
+      "fit_sortorder": 7,
+      "fit_equipment": "dumbbell",
+      "fit_primarymuscle": "forearms",
+      "fit_exerciseexternalid": "Palms-Down_Dumbbell_Wrist_Curl_Over_A_Bench",
+      "fit_imageurl": null,
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
+      "fit_name": "Palms-Down Dumbbell Wrist Curl Over A Bench"
+    },
     {
       "fit_targetreps": "5",
       "fit_plannedexerciseid": "8cfd0eb9-1973-f111-ab0f-000d3a37eab2",
@@ -108,18 +192,6 @@
       "fit_targetsets": 4,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
       "fit_name": "Overhead Barbell Press"
-    },
-    {
-      "fit_targetreps": "8-10",
-      "fit_plannedexerciseid": "d65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 1,
-      "fit_equipment": "barbell",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Barbell_Curl",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
-      "fit_targetsets": 4,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Barbell Curl"
     },
     {
       "fit_targetreps": "6-8",
@@ -182,18 +254,6 @@
       "fit_name": "Dumbbell Shoulder Press"
     },
     {
-      "fit_targetreps": "10-12",
-      "fit_plannedexerciseid": "d75e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 2,
-      "fit_equipment": "barbell",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Close-Grip_EZ_Bar_Curl",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_EZ_Bar_Curl/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "EZ-Bar Curl"
-    },
-    {
       "fit_targetreps": "8-12",
       "fit_plannedexerciseid": "b674c7ba-1973-f111-ab0f-000d3a59d2d3",
       "fit_sortorder": 2,
@@ -240,18 +300,6 @@
       "fit_targetsets": 4,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
       "fit_name": "Incline Barbell Press"
-    },
-    {
-      "fit_targetreps": "8-10",
-      "fit_plannedexerciseid": "73fd0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 3,
-      "fit_equipment": "barbell",
-      "fit_primarymuscle": "shoulders",
-      "fit_exerciseexternalid": "Barbell_Shoulder_Press",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Overhead Barbell Press"
     },
     {
       "fit_targetreps": "8-12",
@@ -327,18 +375,6 @@
     },
     {
       "fit_targetreps": "10-12",
-      "fit_plannedexerciseid": "f9d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_sortorder": 3,
-      "fit_equipment": "dumbbell",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Hammer_Curls",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Hammer Curls"
-    },
-    {
-      "fit_targetreps": "10-12",
       "fit_plannedexerciseid": "b1fd0eb9-1973-f111-ab0f-000d3a37eab2",
       "fit_sortorder": 4,
       "fit_equipment": "cable",
@@ -408,18 +444,6 @@
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
       "fit_name": "Wide-Grip Lat Pulldown"
-    },
-    {
-      "fit_targetreps": "12-15",
-      "fit_plannedexerciseid": "fad4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_sortorder": 4,
-      "fit_equipment": "cable",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Cable_Preacher_Curl",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Preacher_Curl/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Cable Preacher Curl"
     },
     {
       "fit_targetreps": "12-15",
@@ -494,30 +518,6 @@
       "fit_name": "Rear Delt Row"
     },
     {
-      "fit_targetreps": "10-12",
-      "fit_plannedexerciseid": "fbd4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_sortorder": 5,
-      "fit_equipment": "cable",
-      "fit_primarymuscle": "triceps",
-      "fit_exerciseexternalid": "Triceps_Pushdown",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
-      "fit_targetsets": 4,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Triceps Pushdown"
-    },
-    {
-      "fit_targetreps": "12-15",
-      "fit_plannedexerciseid": "80fd0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 6,
-      "fit_equipment": "dumbbell",
-      "fit_primarymuscle": "shoulders",
-      "fit_exerciseexternalid": "Alternating_Deltoid_Raise",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Deltoid_Raise/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Lateral Raise"
-    },
-    {
       "fit_targetreps": "15-20",
       "fit_plannedexerciseid": "ca5e26bf-1973-f111-ab0f-000d3a37eab2",
       "fit_sortorder": 6,
@@ -540,18 +540,6 @@
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
       "fit_name": "Dumbbell Pullover"
-    },
-    {
-      "fit_targetreps": "12-15",
-      "fit_plannedexerciseid": "543456c1-1973-f111-ab0f-000d3a59d2d3",
-      "fit_sortorder": 6,
-      "fit_equipment": "cable",
-      "fit_primarymuscle": "triceps",
-      "fit_exerciseexternalid": "Cable_Lying_Triceps_Extension",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Cable Triceps Extension"
     },
     {
       "fit_targetreps": "10-12",
@@ -614,18 +602,6 @@
       "fit_name": "Barbell Shrug"
     },
     {
-      "fit_targetreps": "12-15",
-      "fit_plannedexerciseid": "d85e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 7,
-      "fit_equipment": "body only",
-      "fit_primarymuscle": "triceps",
-      "fit_exerciseexternalid": "Bench_Dips",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "f8d4cabe-1973-f111-ab0f-6045bd049ce0",
-      "fit_name": "Bench Dips"
-    },
-    {
       "fit_targetreps": "15-20",
       "fit_plannedexerciseid": "a374c7ba-1973-f111-ab0f-000d3a59d2d3",
       "fit_sortorder": 7,
@@ -662,18 +638,6 @@
       "fit_name": "Barbell Shrug"
     },
     {
-      "fit_targetreps": "10-15",
-      "fit_plannedexerciseid": "fb13b2b8-1973-f111-ab0f-6045bd049ce0",
-      "fit_sortorder": 7,
-      "fit_equipment": "cable",
-      "fit_primarymuscle": "triceps",
-      "fit_exerciseexternalid": "Triceps_Pushdown",
-      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
-      "fit_targetsets": 4,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Triceps Pushdown"
-    },
-    {
       "fit_targetreps": "10-12",
       "fit_plannedexerciseid": "0b14b2b8-1973-f111-ab0f-6045bd049ce0",
       "fit_sortorder": 7,
@@ -698,40 +662,88 @@
       "fit_name": "Bench Dips"
     },
     {
-      "fit_targetreps": "8-12",
-      "fit_plannedexerciseid": "4e82e82f-6776-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 8,
-      "fit_equipment": "cable",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Cable_Hammer_Curls_-_Rope_Attachment",
-      "fit_imageurl": null,
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Hammer Curls - Rope Attachment"
-    },
-    {
-      "fit_targetreps": "8-12",
-      "fit_plannedexerciseid": "1fb97856-6776-f111-ab0f-6045bd049ce0",
-      "fit_sortorder": 9,
+      "fit_targetreps": "5-8",
+      "fit_plannedexerciseid": "37396a2d-0158-432f-86d1-bb4fde5e425f",
+      "fit_sortorder": 1,
       "fit_equipment": "barbell",
-      "fit_primarymuscle": "biceps",
-      "fit_exerciseexternalid": "Close-Grip_Standing_Barbell_Curl",
-      "fit_imageurl": null,
-      "fit_targetsets": 3,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Close-Grip Standing Barbell Curl"
+      "fit_primarymuscle": "chest",
+      "fit_exerciseexternalid": "Barbell_Bench_Press_-_Medium_Grip",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
+      "fit_targetsets": 4,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Barbell Bench Press"
     },
     {
-      "fit_targetreps": "8-12",
-      "fit_plannedexerciseid": "98c34681-6776-f111-ab0f-000d3a37eab2",
-      "fit_sortorder": 10,
+      "fit_targetreps": "8-10",
+      "fit_plannedexerciseid": "cf162752-434f-4eb0-b65d-197aff8f2e34",
+      "fit_sortorder": 2,
       "fit_equipment": "dumbbell",
-      "fit_primarymuscle": "forearms",
-      "fit_exerciseexternalid": "Palms-Down_Dumbbell_Wrist_Curl_Over_A_Bench",
-      "fit_imageurl": null,
+      "fit_primarymuscle": "chest",
+      "fit_exerciseexternalid": "Incline_Dumbbell_Press",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
       "fit_targetsets": 3,
-      "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Palms-Down Dumbbell Wrist Curl Over A Bench"
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Incline Dumbbell Press"
+    },
+    {
+      "fit_targetreps": "6-8",
+      "fit_plannedexerciseid": "821a42df-ff45-4c88-a78c-af301c8abbf7",
+      "fit_sortorder": 3,
+      "fit_equipment": "barbell",
+      "fit_primarymuscle": "shoulders",
+      "fit_exerciseexternalid": "Barbell_Shoulder_Press",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
+      "fit_targetsets": 4,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Overhead Barbell Press"
+    },
+    {
+      "fit_targetreps": "12-15",
+      "fit_plannedexerciseid": "056a2339-8c95-434b-9225-14432104f19d",
+      "fit_sortorder": 4,
+      "fit_equipment": "dumbbell",
+      "fit_primarymuscle": "shoulders",
+      "fit_exerciseexternalid": "Alternating_Deltoid_Raise",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Deltoid_Raise/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Dumbbell Lateral Raise"
+    },
+    {
+      "fit_targetreps": "12-15",
+      "fit_plannedexerciseid": "edbe3fab-10f4-43e1-bdb0-8272a05cf465",
+      "fit_sortorder": 5,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "chest",
+      "fit_exerciseexternalid": "Cable_Crossover",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Cable Crossover"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "3d81834f-4779-4ef7-ba20-ddcba2979c42",
+      "fit_sortorder": 6,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "triceps",
+      "fit_exerciseexternalid": "Triceps_Pushdown",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Triceps Pushdown"
+    },
+    {
+      "fit_targetreps": "10-12",
+      "fit_plannedexerciseid": "94e4e2ee-5f1a-40ca-ad2c-99a01bc84797",
+      "fit_sortorder": 7,
+      "fit_equipment": "cable",
+      "fit_primarymuscle": "triceps",
+      "fit_exerciseexternalid": "Cable_Lying_Triceps_Extension",
+      "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
+      "fit_targetsets": 3,
+      "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
+      "fit_name": "Cable Triceps Extension"
     }
   ]
 }
