@@ -3,7 +3,8 @@ import {
   getAllLogs, getSessions, getPRs, createPR, updatePR, est1RM, sessionDay,
   type ExerciseLog, type WorkoutSession, type PersonalRecord,
 } from '../lib/fitness';
-import { exportAll, importAll } from '../lib/dataverse';
+import { importAll } from '../lib/dataverse';
+import { downloadBackup, markBackedUp } from '../lib/backup';
 import { useApp } from '../lib/appContext';
 import { fromLb } from '../lib/units';
 import { EQUIPMENT } from '../lib/equipment';
@@ -36,14 +37,8 @@ export function Profile() {
 
   async function exportData() {
     try {
-      const json = await exportAll();
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `fitness-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
+      await downloadBackup();
+      markBackedUp();
       toast('Backup downloaded');
     } catch (e) {
       toast((e as Error).message, 'err');
@@ -243,7 +238,8 @@ export function Profile() {
         <div className="card">
           <div className="section-head"><h2>Backup &amp; data</h2></div>
           <p style={{ margin: '0 0 12px', color: 'var(--ink-2)', fontSize: '0.82rem' }}>
-            Your workouts live only on this device. Export a backup you can save or move to another device.
+            Your data lives only on this device. A backup includes presets, workouts, sets, PRs and your settings.
+            Once a week you’ll be reminded to download one — or grab it anytime here.
           </p>
           <div className="row" style={{ gap: 8 }}>
             <button className="btn" style={{ flex: 1 }} onClick={exportData} data-telemetry-name="export-data">Export backup</button>

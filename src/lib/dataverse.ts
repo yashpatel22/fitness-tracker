@@ -175,23 +175,37 @@ export async function remove(entitySet: string, id: string): Promise<void> {
   await persist(entitySet);
 }
 
-// --- Backup helpers (used by Profile export/import) ---
+// --- Backup helpers (used by Profile export/import + weekly auto-backup) ---
+
+// Preferences live in localStorage (not IndexedDB), so include them explicitly
+// to make a backup a complete snapshot of the app.
+const PREF_KEYS = ['fit_unit_pref', 'fit_theme', 'fit_equipment_have', 'fit_display_name'];
 
 export async function exportAll(): Promise<string> {
   await ensureReady();
   const dump: Record<string, Row[]> = {};
   for (const es of Object.keys(ID_FIELD)) dump[es] = table(es);
-  return JSON.stringify({ version: 1, exportedAt: new Date().toISOString(), tables: dump }, null, 2);
+  const prefs: Record<string, string> = {};
+  for (const k of PREF_KEYS) {
+    const v = localStorage.getItem(k);
+    if (v != null) prefs[k] = v;
+  }
+  return JSON.stringify({ version: 2, exportedAt: new Date().toISOString(), tables: dump, prefs }, null, 2);
 }
 
 export async function importAll(json: string): Promise<void> {
-  const parsed = JSON.parse(json) as { tables?: Record<string, Row[]> };
+  const parsed = JSON.parse(json) as { tables?: Record<string, Row[]>; prefs?: Record<string, string> };
   if (!parsed.tables) throw new Error('Invalid backup file');
   await ensureReady();
   for (const es of Object.keys(ID_FIELD)) {
     if (parsed.tables[es]) {
       cache[es] = parsed.tables[es];
       await persist(es);
+    }
+  }
+  if (parsed.prefs) {
+    for (const [k, v] of Object.entries(parsed.prefs)) {
+      try { localStorage.setItem(k, v); } catch { /* ignore */ }
     }
   }
 }
