@@ -22,7 +22,7 @@ interface Best {
 }
 
 export function Profile() {
-  const { displayName, setDisplayName, unit, setUnit, equipment, setEquipment, toast } = useApp();
+  const { displayName, setDisplayName, unit, setUnit, theme, setTheme, equipment, setEquipment, toast } = useApp();
   const [loading, setLoading] = useState(true);
   const [bests, setBests] = useState<Best[]>([]);
   const [nameDraft, setNameDraft] = useState(displayName);
@@ -175,6 +175,20 @@ export function Profile() {
             </div>
           </div>
           <p style={{ margin: '10px 0 0', color: 'var(--ink-3)', fontSize: '0.78rem' }}>Weights are always stored in lb and converted for display.</p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="card">
+          <div className="section-head"><h2>Appearance</h2></div>
+          <div className="row" style={{ alignItems: 'center' }}>
+            <span style={{ flex: 1, color: 'var(--ink-2)', fontSize: '0.88rem' }}>Theme</span>
+            <div className="toggle">
+              <button className={theme === 'light' ? 'on' : ''} onClick={() => setTheme('light')} data-telemetry-name="theme-light">Light</button>
+              <button className={theme === 'dark' ? 'on' : ''} onClick={() => setTheme('dark')} data-telemetry-name="theme-dark">Dark</button>
+            </div>
+          </div>
+          <p style={{ margin: '10px 0 0', color: 'var(--ink-3)', fontSize: '0.78rem' }}>Defaults to your device setting until you choose.</p>
         </div>
       </section>
 

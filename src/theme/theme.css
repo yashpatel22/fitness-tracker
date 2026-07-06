@@ -2,6 +2,8 @@
    White, sharp-edged, bold, Coca-Cola red accent. One language for the whole app. */
 
 :root {
+  color-scheme: light;
+
   /* Brand */
   --red: #f40009;
   --red-ink: #c8000a;
@@ -21,7 +23,16 @@
   --green: #1f9d57;
   --green-wash: #eaf7f0;
   --amber: #e08a00;
+  --amber-wash: #fff8ec;
   --slate: #5b6470;
+
+  /* Inverted "filled" badge (dark chip + light text in light mode) */
+  --fill: #111111;
+  --fill-fg: #ffffff;
+
+  /* Misc theme-aware surfaces */
+  --rest-scrim: rgba(255, 255, 255, 0.97);
+  --skeleton-mid: #efe9e5;
 
   /* Shape — sharp by design */
   --r: 0px;
@@ -32,6 +43,36 @@
   /* App column */
   --app-w: 480px;
   --tabbar-h: 64px;
+}
+
+/* ---------- Dark mode ---------- */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --red: #ff2a30;
+  --red-ink: #ff585d;
+  --red-wash: rgba(255, 42, 48, 0.16);
+
+  --ink: #f1efec;
+  --ink-2: #b4b0ab;
+  --ink-3: #857f79;
+  --line: #322f2d;
+  --line-2: #433f3c;
+  --paper: #1b1a18;
+  --paper-2: #232120;
+  --canvas: #101010;
+
+  --green: #35c37e;
+  --green-wash: rgba(53, 195, 126, 0.16);
+  --amber: #f0a63f;
+  --amber-wash: rgba(240, 166, 63, 0.15);
+  --slate: #99a1ad;
+
+  --fill: #f1efec;
+  --fill-fg: #17150f;
+
+  --rest-scrim: rgba(27, 26, 24, 0.97);
+  --skeleton-mid: #33302e;
 }
 
 * { box-sizing: border-box; }
