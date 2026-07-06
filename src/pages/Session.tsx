@@ -97,7 +97,59 @@ export function Session() {
           const [sd, logs, allLogs] = await Promise.all([getSplitDay(s._fit_splitday_value), getLogs(id), getAllLogs()]);
           setDay(sd);
           setBests(exerciseBests(allLogs, id));
-          const exs = sd ? await getPlannedExercises(sd.fit_splitdayid) : [];
+          const presetExs = sd ? await getPlannedExercises(sd.fit_splitdayid) : [];
+          const isCompleted = s.fit_status === STATUS_COMPLETED;
+
+          // A workout is a record of what was actually performed, so we render it
+          // against its LOGS — not just the preset's *current* exercises, which may
+          // have changed since (editing/reseeding a preset must never blank out old
+          // sessions). Index logs by exercise + set, keeping the best row per set:
+          // a completed row wins over an incomplete duplicate (guards against legacy
+          // double-writes), and track the highest set number logged per exercise.
+          const logKeyOf = (l: ExerciseLog) => l.fit_exerciseexternalid || l.fit_exercisename || '';
+          const bestLog: Record<string, ExerciseLog> = {};
+          const maxSet: Record<string, number> = {};
+          const loggedMeta: Record<string, { name: string; extId?: string }> = {};
+          const loggedOrder: string[] = [];
+          for (const l of logs) {
+            const lk = logKeyOf(l);
+            if (!lk) continue;
+            const n = l.fit_setnumber || 1;
+            const sk = `${lk}__${n}`;
+            const prev = bestLog[sk];
+            // overwrite unless the existing row is completed and this one isn't
+            if (!prev || !!l.fit_iscompleted || !prev.fit_iscompleted) bestLog[sk] = l;
+            maxSet[lk] = Math.max(maxSet[lk] || 0, n);
+            if (!(lk in loggedMeta)) { loggedMeta[lk] = { name: l.fit_exercisename || titleCase(lk), extId: l.fit_exerciseexternalid }; loggedOrder.push(lk); }
+          }
+
+          // Render list = the preset's exercises (so an in-progress workout can log
+          // every planned set), plus any logged exercises no longer in the preset.
+          // For a COMPLETED workout, show only what was actually performed (no blanks).
+          const presetKeys = new Set(presetExs.map((e) => e.fit_exerciseexternalid || e.fit_name));
+          const exs: PlannedExercise[] = [];
+          for (const ex of presetExs) {
+            const kk = ex.fit_exerciseexternalid || ex.fit_name;
+            const target = ex.fit_targetsets || 3;
+            const eff = isCompleted ? (maxSet[kk] || 0) : Math.max(target, maxSet[kk] || 0);
+            if (isCompleted && eff === 0) continue;
+            exs.push({ ...ex, fit_targetsets: eff });
+          }
+          for (const lk of loggedOrder) {
+            if (presetKeys.has(lk)) continue;
+            const meta = loggedMeta[lk];
+            const dbEx = meta.extId ? getExerciseByIdSync(meta.extId) : undefined;
+            exs.push({
+              fit_plannedexerciseid: `logged:${lk}`,
+              fit_name: meta.name,
+              fit_exerciseexternalid: meta.extId,
+              fit_primarymuscle: dbEx?.primaryMuscles?.[0] || '',
+              fit_equipment: dbEx?.equipment || undefined,
+              fit_targetsets: maxSet[lk] || 1,
+              fit_targetreps: '',
+              _fit_splitday_value: sd?.fit_splitdayid,
+            } as PlannedExercise);
+          }
           setExercises(exs);
           const initSets: Record<string, SetState> = {};
           const initActive: Record<string, number> = {};
@@ -106,7 +158,7 @@ export function Session() {
             const total = totalOf(ex);
             let firstOpen = 0;
             for (let n = 1; n <= total; n++) {
-              const log = logs.find((l) => (l.fit_exerciseexternalid || l.fit_exercisename) === exKey && l.fit_setnumber === n);
+              const log = bestLog[`${exKey}__${n}`];
               const done = !!log?.fit_iscompleted;
               if (!done && !firstOpen) firstOpen = n;
               initSets[key(ex.fit_plannedexerciseid, n)] = {
