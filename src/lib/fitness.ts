@@ -35,10 +35,9 @@ export const presetLabel = (d: { fit_name?: string; fit_focus?: number }) =>
   (d.fit_name && d.fit_name.trim()) || focusLabel(d.fit_focus);
 
 // GUIDs of the out-of-the-box (seeded) presets. Anything NOT in this set was
-// created by the user, so the UI can flag it as a custom preset. Kept as a plain
-// literal set (not imported from seed.json) so the shared fitness.ts stays usable
-// in the code-app, which has no bundled seed. Code-app OOB GUIDs are added too so
-// the same check works against real Dataverse rows.
+// created by the user, so the UI can flag it as a custom preset. Includes both
+// the web-app seed Push GUID and the code-app Dataverse Push GUID so the same
+// check is safe in either app (and if this file is ever copied between them).
 export const OOB_PRESET_IDS = new Set<string>([
   '32224902-8072-f111-ab0f-000d3a37eab2', // Arms
   'c65e26bf-1973-f111-ab0f-000d3a37eab2', // Shoulders
@@ -46,7 +45,8 @@ export const OOB_PRESET_IDS = new Set<string>([
   '4a224902-8072-f111-ab0f-000d3a37eab2', // Upper
   'a55e26bf-1973-f111-ab0f-000d3a37eab2', // Back
   '48ff5a05-8072-f111-ab0f-6045bd049ce0', // Legs
-  'bc377223-cad4-43cc-88b1-1dcf42381286', // Push (web seed)
+  'bc377223-cad4-43cc-88b1-1dcf42381286', // Push (web-app seed)
+  '1a2f97e4-0479-f111-ab0f-000d3a37eab2', // Push (code-app Dataverse)
   '3e224902-8072-f111-ab0f-000d3a37eab2', // Pull
 ]);
 export const isCustomPreset = (d: { fit_splitdayid?: string }) =>
