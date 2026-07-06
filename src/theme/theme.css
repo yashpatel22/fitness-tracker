@@ -1,0 +1,56 @@
+/* Fitness Tracker — "Refresh" design system.
+   White, sharp-edged, bold, Coca-Cola red accent. One language for the whole app. */
+
+:root {
+  /* Brand */
+  --red: #f40009;
+  --red-ink: #c8000a;
+  --red-wash: #fff0f1;
+
+  /* Ink / surfaces (white, sharp, bold) */
+  --ink: #111111;          /* primary text + bold borders */
+  --ink-2: #565656;        /* secondary text */
+  --ink-3: #8c8c8c;        /* tertiary / labels */
+  --line: #e6e3e0;         /* hairline borders */
+  --line-2: #d2cecb;       /* slightly stronger hairline */
+  --paper: #ffffff;        /* surfaces */
+  --paper-2: #f7f5f3;      /* soft fill (inputs, chips) */
+  --canvas: #ece9e6;       /* backdrop behind the app column (desktop) */
+
+  /* Status */
+  --green: #1f9d57;
+  --green-wash: #eaf7f0;
+  --amber: #e08a00;
+  --slate: #5b6470;
+
+  /* Shape — sharp by design */
+  --r: 0px;
+
+  /* Fonts — Coca-Cola JIT stack; resolves to Segoe UI / system-ui under the host CSP. */
+  --font-ui: 'Public Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* App column */
+  --app-w: 480px;
+  --tabbar-h: 64px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: var(--font-ui);
+  background: var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a { color: var(--red); text-decoration: none; }
+a:hover { color: var(--red-ink); }
+
+input, select, textarea, button { font-family: inherit; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); }
+::-webkit-scrollbar-track { background: transparent; }
+
+h1, h2, h3, h4 { letter-spacing: -0.01em; }

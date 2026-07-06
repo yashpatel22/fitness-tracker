@@ -1,0 +1,10 @@
+{
+  "name": "Fitness Tracker",
+  "short_name": "Fitness",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f10",
+  "theme_color": "#0f0f10"
+}
