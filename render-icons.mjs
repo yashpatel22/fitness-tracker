@@ -1,3 +1,7 @@
+// One-time icon renderer. Run locally after editing favicon.svg / icon-app.svg:
+//   npm i -D sharp && node render-icons.mjs
+// sharp is intentionally NOT a committed dependency (CI doesn't need it — the
+// generated PNGs are committed to public/).
 import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
