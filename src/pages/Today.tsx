@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSessions, createPreset, getStructure, invalidateStructure,
-  focusLabel, FOCUS, focusValue, weekRange, sessionDay,
+  presetLabel, FOCUS, focusValue, weekRange, sessionDay,
   STATUS_COMPLETED,
   type WorkoutPlan, type SplitDay, type PlannedExercise, type WorkoutSession,
 } from '../lib/fitness';
@@ -135,7 +135,7 @@ export function Today() {
         <section className="section">
           <div className="start">
             <div className="eyebrow">In progress</div>
-            <h2>Continue {focusLabel(presets.find((p) => p.fit_splitdayid === inProgress._fit_splitday_value)?.fit_focus) || 'workout'}</h2>
+            <h2>Continue {(() => { const p = presets.find((x) => x.fit_splitdayid === inProgress._fit_splitday_value); return p ? presetLabel(p) : 'workout'; })()}</h2>
             <p>You started this earlier in the week — pick up where you left off.</p>
             <div className="start-actions">
               <button className="btn" onClick={() => nav(`/session/${inProgress.fit_workoutsessionid}`)} data-telemetry-name="resume-workout"><IconPlay size={18} /> Resume</button>
@@ -149,7 +149,7 @@ export function Today() {
         <div className="preset-grid">
           {presets.map((p) => (
             <div key={p.fit_splitdayid} className="preset-tile" onClick={() => nav(`/day/${p.fit_splitdayid}`)} data-telemetry-name="open-preset">
-              <div className="pt-name">{focusLabel(p.fit_focus)}</div>
+              <div className="pt-name">{presetLabel(p)}</div>
               <div className="pt-sub">{exCount[p.fit_splitdayid] ?? 0} exercises</div>
               {missingMap[p.fit_splitdayid] > 0 && <div className="pt-gear">⚠ missing {missingMap[p.fit_splitdayid]} gear</div>}
             </div>

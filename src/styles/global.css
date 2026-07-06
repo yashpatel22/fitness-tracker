@@ -257,6 +257,28 @@
 .ms-controls .input { width: 52px; text-align: center; }
 .ms-controls .input.reps { width: 70px; }
 
+/* Presets screen — read-only cards + per-preset edit mode */
+.ms-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.ms-head-main { flex: 1; min-width: 0; }
+.ms-title { font-size: 1.15rem; font-weight: 800; line-height: 1.1; overflow-wrap: anywhere; }
+.ms-sub { font-size: 0.78rem; color: var(--ink-2); text-transform: capitalize; margin-top: 3px; }
+.ms-ro-list .list-row .grow .s { text-transform: capitalize; }
+.ms-empty { color: var(--ink-3); font-size: 0.85rem; padding: 4px 2px; }
+.ms-editing { border-color: var(--red); box-shadow: inset 0 0 0 1.5px var(--red); }
+.ms-edit-exhead { display: flex; align-items: center; gap: 8px; margin: 4px 0 10px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+.ms-edit-exhead .pill { margin-left: auto; }
+.ms-row.removed { opacity: 0.42; }
+.ms-save-row { display: flex; gap: 10px; margin-top: 16px; }
+.ms-save-row .btn { flex: 1; }
+.ms-delete { margin-top: 10px; width: 100%; background: none; border: none; color: var(--ink-3); font-weight: 700; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; }
+.ms-delete:hover { color: var(--red); }
+
+/* Library — chosen-exercises panel while building a preset */
+.lib-chosen { margin-top: 12px; }
+
+/* App version footer (Profile) */
+.app-version { text-align: center; margin: 26px 0 4px; color: var(--ink-3); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+
 /* ---------- Heatmap ---------- */
 .heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
 .heatmap .cell { aspect-ratio: 1; background: var(--paper-2); border: 1px solid var(--line); }

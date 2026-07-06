@@ -28,6 +28,11 @@ export const statusLabel = (v?: number) => (v == null ? 'Planned' : STATUS[v - B
 export const focusValue = (label: string) => BASE + FOCUS.indexOf(label);
 export const dowValue = (label: string) => BASE + DAY_OF_WEEK.indexOf(label);
 export const statusValue = (label: string) => BASE + STATUS.indexOf(label);
+
+// Display label for a preset/split day: the user's custom name if set,
+// otherwise the muscle-group focus label. Fixes custom names showing as the group.
+export const presetLabel = (d: { fit_name?: string; fit_focus?: number }) =>
+  (d.fit_name && d.fit_name.trim()) || focusLabel(d.fit_focus);
 export const STATUS_PLANNED = BASE;
 export const STATUS_INPROGRESS = BASE + 1;
 export const STATUS_COMPLETED = BASE + 2;

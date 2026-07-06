@@ -8,6 +8,7 @@ import { useApp } from '../lib/appContext';
 import { fromLb } from '../lib/units';
 import { EQUIPMENT } from '../lib/equipment';
 import { getExerciseByIdSync, titleCase } from '../lib/exerciseDb';
+import { APP_VERSION } from '../lib/version';
 import { Loader } from '../ui/common';
 import { IconCheck, IconTrophy } from '../ui/icons';
 
@@ -258,6 +259,8 @@ export function Profile() {
           <p style={{ margin: '10px 0 0', color: 'var(--ink-3)', fontSize: '0.78rem' }}>Importing replaces your current data with the backup’s contents.</p>
         </div>
       </section>
+
+      <p className="app-version">Fitness Tracker · v{APP_VERSION}</p>
     </div>
   );
 }

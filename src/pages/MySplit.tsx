@@ -3,13 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
   updateSplitDay, deleteSplitDay, createPreset, getStructure, invalidateStructure,
-  FOCUS, focusLabel, focusValue,
+  FOCUS, focusLabel, focusValue, presetLabel,
   type WorkoutPlan, type SplitDay, type PlannedExercise,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
 import { plannedImage } from '../lib/exerciseDb';
 import { Loader, Empty, Thumb, Modal } from '../ui/common';
-import { IconTrash, IconPlus } from '../ui/icons';
+import { IconTrash, IconPlus, IconEdit, IconCheck, IconX } from '../ui/icons';
+
+// A staged copy of one exercise while its preset is being edited. Nothing is
+// written to the backend until "Save preset" — so removals/edits are reversible
+// with Cancel and the user gets a clear, explicit save.
+interface EditEx {
+  id: string;
+  name: string;
+  extId?: string;
+  muscle?: string;
+  equipment?: string;
+  sets: string;
+  reps: string;
+  origSets?: number;
+  origReps?: string;
+  removed: boolean;
+}
 
 export function MySplit() {
   const nav = useNavigate();
@@ -18,6 +34,13 @@ export function MySplit() {
   const [plan, setPlan] = useState<WorkoutPlan | null>(null);
   const [presets, setPresets] = useState<SplitDay[]>([]);
   const [exMap, setExMap] = useState<Record<string, PlannedExercise[]>>({});
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editFocus, setEditFocus] = useState('Arms');
+  const [editExs, setEditExs] = useState<EditEx[]>([]);
+  const [saving, setSaving] = useState(false);
+
   const [creating, setCreating] = useState(false);
   const [newFocus, setNewFocus] = useState('Arms');
   const [newName, setNewName] = useState('');
@@ -39,27 +62,78 @@ export function MySplit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function changeFocus(d: SplitDay, focus: number) {
-    setPresets((prev) => prev.map((x) => (x.fit_splitdayid === d.fit_splitdayid ? { ...x, fit_focus: focus, fit_name: focusLabel(focus) } : x)));
-    try { await updateSplitDay(d.fit_splitdayid, { fit_focus: focus, fit_name: focusLabel(focus) }); invalidateStructure(); }
-    catch (e) { toast((e as Error).message, 'err'); }
+  // ---- Edit mode (one preset at a time; all changes staged until Save) ----
+  function startEdit(d: SplitDay) {
+    setEditingId(d.fit_splitdayid);
+    setEditName(presetLabel(d));
+    setEditFocus(focusLabel(d.fit_focus) || 'Arms');
+    setEditExs((exMap[d.fit_splitdayid] || []).map((e) => ({
+      id: e.fit_plannedexerciseid,
+      name: e.fit_name,
+      extId: e.fit_exerciseexternalid,
+      muscle: e.fit_primarymuscle,
+      equipment: e.fit_equipment,
+      sets: String(e.fit_targetsets ?? 3),
+      reps: e.fit_targetreps ?? '8-12',
+      origSets: e.fit_targetsets,
+      origReps: e.fit_targetreps,
+      removed: false,
+    })));
+  }
+  function cancelEdit() {
+    setEditingId(null);
+    setEditExs([]);
+  }
+  function patchEx(id: string, patch: Partial<EditEx>) {
+    setEditExs((prev) => prev.map((e) => (e.id === id ? { ...e, ...patch } : e)));
+  }
+  function toggleRemove(id: string) {
+    setEditExs((prev) => prev.map((e) => (e.id === id ? { ...e, removed: !e.removed } : e)));
   }
 
-  function editEx(dayId: string, exId: string, patch: Partial<PlannedExercise>) {
-    setExMap((prev) => ({ ...prev, [dayId]: prev[dayId].map((e) => (e.fit_plannedexerciseid === exId ? { ...e, ...patch } : e)) }));
+  async function saveEdit(d: SplitDay): Promise<boolean> {
+    setSaving(true);
+    try {
+      for (const ex of editExs) {
+        if (ex.removed) { await deletePlannedExercise(ex.id); continue; }
+        const sets = parseInt(ex.sets, 10) || 0;
+        if (sets !== ex.origSets || ex.reps !== ex.origReps) {
+          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps });
+        }
+      }
+      await updateSplitDay(d.fit_splitdayid, {
+        fit_name: editName.trim() || focusLabel(focusValue(editFocus)),
+        fit_focus: focusValue(editFocus),
+      });
+      invalidateStructure();
+      await reload(true);
+      toast('Preset saved');
+      setEditingId(null);
+      setEditExs([]);
+      return true;
+    } catch (e) {
+      toast((e as Error).message, 'err');
+      return false;
+    } finally {
+      setSaving(false);
+    }
   }
-  async function persistEx(exId: string, patch: Partial<PlannedExercise>) {
-    try { await updatePlannedExercise(exId, patch); invalidateStructure(); } catch (e) { toast((e as Error).message, 'err'); }
+
+  // Persist current staged edits first (so nothing is lost), then jump to the
+  // Library to add exercises to this preset.
+  async function addExercises(d: SplitDay) {
+    const ok = await saveEdit(d);
+    if (ok) nav(`/library?preset=${d.fit_splitdayid}`);
   }
-  async function removeEx(dayId: string, exId: string) {
-    setExMap((prev) => ({ ...prev, [dayId]: prev[dayId].filter((e) => e.fit_plannedexerciseid !== exId) }));
-    try { await deletePlannedExercise(exId); invalidateStructure(); toast('Exercise removed'); } catch (e) { toast((e as Error).message, 'err'); }
-  }
-  async function removePreset(d: SplitDay) {
-    if (!confirm(`Delete the “${focusLabel(d.fit_focus)}” preset?`)) return;
+
+  async function deletePreset(d: SplitDay) {
+    if (!confirm(`Delete the “${presetLabel(d)}” preset? This can’t be undone.`)) return;
     setPresets((prev) => prev.filter((x) => x.fit_splitdayid !== d.fit_splitdayid));
-    try { await deleteSplitDay(d.fit_splitdayid); invalidateStructure(); toast('Preset deleted'); } catch (e) { toast((e as Error).message, 'err'); }
+    setEditingId(null);
+    try { await deleteSplitDay(d.fit_splitdayid); invalidateStructure(); toast('Preset deleted'); }
+    catch (e) { toast((e as Error).message, 'err'); await reload(true); }
   }
+
   async function createNew() {
     if (!plan) return;
     try {
@@ -72,66 +146,105 @@ export function MySplit() {
   }
 
   if (loading) return <Loader label="Loading your presets…" />;
-  if (!plan) return <Empty title="No presets yet" sub="Your preset library should have been seeded — check Dataverse." />;
+  if (!plan) return <Empty title="No presets yet" sub="Your preset library should have been seeded." />;
+
+  const kept = editExs.filter((e) => !e.removed).length;
 
   return (
     <div className="screen">
       <header className="screen-head">
         <div className="eyebrow">Your templates</div>
         <h1>Presets</h1>
-        <p>{presets.length} workout presets · edit exercises or build your own.</p>
+        <p>{presets.length} workout presets · tap Edit to change one.</p>
       </header>
 
       <button className="btn block" style={{ marginTop: 14 }} onClick={() => setCreating(true)} data-telemetry-name="create-preset"><IconPlus size={16} /> Create a preset</button>
 
-      {presets.map((d) => (
-        <section className="section" key={d.fit_splitdayid}>
-          <div className="card">
-            <div className="row" style={{ marginBottom: 14, alignItems: 'center' }}>
-              <div className="field" style={{ marginBottom: 0, flex: 1 }}>
+      {presets.map((d) => {
+        const exs = exMap[d.fit_splitdayid] || [];
+        const isEditing = editingId === d.fit_splitdayid;
+
+        if (!isEditing) {
+          return (
+            <section className="section" key={d.fit_splitdayid}>
+              <div className="card ms-card">
+                <div className="ms-head">
+                  <div className="ms-head-main">
+                    <div className="ms-title">{presetLabel(d)}</div>
+                    <div className="ms-sub">{focusLabel(d.fit_focus)} · {exs.length} exercise{exs.length === 1 ? '' : 's'}</div>
+                  </div>
+                  <button className="btn secondary sm" onClick={() => startEdit(d)} disabled={!!editingId} data-telemetry-name="edit-preset"><IconEdit size={15} /> Edit</button>
+                </div>
+                <div className="list ms-ro-list">
+                  {exs.map((ex) => (
+                    <div key={ex.fit_plannedexerciseid} className="list-row tappable" onClick={() => ex.fit_exerciseexternalid && nav(`/exercise/${encodeURIComponent(ex.fit_exerciseexternalid)}`)} data-telemetry-name="open-exercise">
+                      <Thumb url={plannedImage(ex.fit_exerciseexternalid)} alt={ex.fit_name} />
+                      <div className="grow">
+                        <div className="t">{ex.fit_name}</div>
+                        <div className="s">{ex.fit_targetsets} × {ex.fit_targetreps} · {ex.fit_primarymuscle}</div>
+                      </div>
+                    </div>
+                  ))}
+                  {!exs.length && <div className="ms-empty">No exercises yet — tap Edit to add some.</div>}
+                </div>
+              </div>
+            </section>
+          );
+        }
+
+        return (
+          <section className="section" key={d.fit_splitdayid}>
+            <div className="card ms-card ms-editing">
+              <div className="field">
+                <label>Preset name</label>
+                <input className="input" value={editName} placeholder={editFocus} onChange={(e) => setEditName(e.target.value)} data-telemetry-name="edit-name" />
+              </div>
+              <div className="field">
                 <label>Muscle group</label>
-                <select className="select" value={focusLabel(d.fit_focus)} onChange={(e) => changeFocus(d, focusValue(e.target.value))} data-telemetry-name="edit-focus">
+                <select className="select" value={editFocus} onChange={(e) => setEditFocus(e.target.value)} data-telemetry-name="edit-focus">
                   {FOCUS.map((f) => <option key={f} value={f}>{f}</option>)}
                 </select>
               </div>
-              <button className="btn ghost sm" onClick={() => removePreset(d)} title="Delete preset" data-telemetry-name="delete-preset"><IconTrash size={16} /></button>
-            </div>
 
-            <div className="list">
-              {(exMap[d.fit_splitdayid] || []).map((ex) => (
-                <div key={ex.fit_plannedexerciseid} className="list-row ms-row">
-                  <div className="ms-exinfo" onClick={() => ex.fit_exerciseexternalid && nav(`/exercise/${encodeURIComponent(ex.fit_exerciseexternalid)}`)} data-telemetry-name="open-exercise">
-                    <Thumb url={plannedImage(ex.fit_exerciseexternalid)} alt={ex.fit_name} />
-                    <div className="grow">
-                      <div className="t">{ex.fit_name}</div>
-                      <div className="s">{ex.fit_primarymuscle} · {ex.fit_equipment}</div>
+              <div className="ms-edit-exhead"><span>Exercises</span><span className="pill">{kept}</span></div>
+              <div className="list">
+                {editExs.map((ex) => (
+                  <div key={ex.id} className={`list-row ms-row ${ex.removed ? 'removed' : ''}`}>
+                    <div className="ms-exinfo" onClick={() => ex.extId && nav(`/exercise/${encodeURIComponent(ex.extId)}`)} data-telemetry-name="open-exercise">
+                      <Thumb url={plannedImage(ex.extId)} alt={ex.name} />
+                      <div className="grow">
+                        <div className="t">{ex.name}</div>
+                        <div className="s">{ex.muscle}{ex.equipment ? ` · ${ex.equipment}` : ''}</div>
+                      </div>
+                    </div>
+                    <div className="ms-controls">
+                      <input className="input" value={ex.sets} title="Sets" disabled={ex.removed}
+                        onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
+                      <span style={{ color: 'var(--ink-3)' }}>×</span>
+                      <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
+                        onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
+                      <span className="spacer" style={{ flex: 1 }} />
+                      <button className="btn ghost sm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
+                        {ex.removed ? <IconPlus size={16} /> : <IconTrash size={16} />}
+                      </button>
                     </div>
                   </div>
-                  <div className="ms-controls">
-                    <input className="input" value={ex.fit_targetsets ?? ''} title="Sets"
-                      onChange={(e) => editEx(d.fit_splitdayid, ex.fit_plannedexerciseid, { fit_targetsets: parseInt(e.target.value, 10) || 0 })}
-                      onBlur={() => persistEx(ex.fit_plannedexerciseid, { fit_targetsets: ex.fit_targetsets })}
-                      data-telemetry-name="edit-sets" />
-                    <span style={{ color: 'var(--ink-3)' }}>×</span>
-                    <input className="input reps" value={ex.fit_targetreps ?? ''} title="Reps"
-                      onChange={(e) => editEx(d.fit_splitdayid, ex.fit_plannedexerciseid, { fit_targetreps: e.target.value })}
-                      onBlur={() => persistEx(ex.fit_plannedexerciseid, { fit_targetreps: ex.fit_targetreps })}
-                      data-telemetry-name="edit-reps" />
-                    <span className="spacer" style={{ flex: 1 }} />
-                    <button className="btn ghost sm" onClick={() => removeEx(d.fit_splitdayid, ex.fit_plannedexerciseid)} title="Remove" data-telemetry-name="remove-exercise"><IconTrash size={16} /></button>
-                  </div>
-                </div>
-              ))}
-              {!(exMap[d.fit_splitdayid] || []).length && (
-                <div className="row" style={{ alignItems: 'center' }}>
-                  <span style={{ color: 'var(--ink-3)', fontSize: '0.85rem', flex: 1 }}>No exercises yet.</span>
-                  <button className="btn secondary sm" onClick={() => nav(`/library?preset=${d.fit_splitdayid}`)} data-telemetry-name="add-exercises"><IconPlus size={14} /> Add</button>
-                </div>
-              )}
+                ))}
+                {!editExs.length && <div className="ms-empty">No exercises — add some below.</div>}
+              </div>
+
+              <button className="btn secondary block" style={{ marginTop: 12 }} onClick={() => addExercises(d)} data-telemetry-name="add-exercises"><IconPlus size={15} /> Add exercises</button>
+
+              <div className="ms-save-row">
+                <button className="btn ghost" onClick={cancelEdit} data-telemetry-name="cancel-edit"><IconX size={15} /> Cancel</button>
+                <button className="btn" disabled={saving} onClick={() => saveEdit(d)} data-telemetry-name="save-preset"><IconCheck size={16} /> Save preset</button>
+              </div>
+
+              <button className="ms-delete" onClick={() => deletePreset(d)} data-telemetry-name="delete-preset"><IconTrash size={14} /> Delete preset</button>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       {creating && (
         <Modal title="Create a preset" onClose={() => setCreating(false)}>

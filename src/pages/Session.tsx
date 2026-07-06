@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSession, getSplitDay, getPlannedExercises, getLogs, getAllLogs, createLog, updateLog, updateSession,
-  focusLabel, STATUS_COMPLETED, sessionDay, exerciseBests,
+  presetLabel, STATUS_COMPLETED, sessionDay, exerciseBests,
   type WorkoutSession, type SplitDay, type PlannedExercise, type ExerciseLog, type ExerciseBest,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
@@ -351,7 +351,7 @@ export function Session() {
       <div className="pl-top">
         <button className="pl-icon" onClick={() => nav(session._fit_splitday_value ? `/day/${session._fit_splitday_value}` : '/')} aria-label="Back to workout start" data-telemetry-name="session-back"><IconBack size={20} /></button>
         <div className="pl-title">
-          <strong>{day ? focusLabel(day.fit_focus) : 'Workout'}</strong>
+          <strong>{day ? presetLabel(day) : 'Workout'}</strong>
           <span>{doneSets}/{totalSets} sets · {sessionDay(session.fit_sessiondate).format('ddd, MMM D')}</span>
         </div>
         <button className="pl-icon" onClick={openEditDate} aria-label="Edit workout date" data-telemetry-name="edit-date"><IconEdit size={18} /></button>

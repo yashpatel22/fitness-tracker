@@ -3,7 +3,7 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSplitDay, getPlannedExercises, getSessions, createSession, getStructure,
-  focusLabel, weekRange, sessionDay, STATUS_INPROGRESS, STATUS_COMPLETED,
+  presetLabel, weekRange, sessionDay, STATUS_INPROGRESS, STATUS_COMPLETED,
   type SplitDay, type PlannedExercise,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
@@ -87,7 +87,7 @@ export function DayPreview() {
       });
       if (open) { nav(`/session/${open.fit_workoutsessionid}`); return; }
       const id = await createSession(day.fit_splitdayid, {
-        fit_name: `${focusLabel(day.fit_focus)} · ${dayjs().format('MMM D')}`,
+        fit_name: `${presetLabel(day)} · ${dayjs().format('MMM D')}`,
         fit_sessiondate: `${dayjs().format('YYYY-MM-DD')}T00:00:00Z`,
         fit_status: STATUS_INPROGRESS,
       });
@@ -123,7 +123,7 @@ export function DayPreview() {
       <div className="pl-top">
         <button className="pl-icon" onClick={() => nav('/')} aria-label="Back to home" data-telemetry-name="day-back"><IconBack size={20} /></button>
         <div className="pl-title">
-          <strong>{focusLabel(day.fit_focus)}</strong>
+          <strong>{presetLabel(day)}</strong>
           <span>{exs.length} exercises · preview</span>
         </div>
         <button className="pl-finish" disabled={starting} onClick={start} data-telemetry-name="start-from-preview"><IconPlay size={16} /> Start</button>
