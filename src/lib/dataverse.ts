@@ -26,7 +26,7 @@ let ready: Promise<void> | null = null;
 // Bump when the seeded OOB preset content changes. On upgrade we reconcile the
 // out-of-the-box presets to match seed.json WITHOUT touching the user's custom
 // presets, sessions, set logs, PRs, or preferences.
-const SEED_VERSION = 2;
+const SEED_VERSION = 3;
 // Every split-day GUID that ships in the current seed = the OOB preset set.
 const SEED_DAY_IDS = new Set((seed.splitDays as { fit_splitdayid: string }[]).map((d) => d.fit_splitdayid));
 // OOB split-day GUIDs that existed in an earlier seed but have since been

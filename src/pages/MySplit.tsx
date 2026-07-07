@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
   updateSplitDay, deleteSplitDay, createPreset, getStructure, invalidateStructure,
-  FOCUS, focusLabel, focusValue, presetLabel, isCustomPreset,
+  FOCUS, focusLabel, focusValue, presetLabel, isCustomPreset, restOf, restSummary,
   type WorkoutPlan, type SplitDay, type PlannedExercise,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
@@ -22,8 +22,10 @@ interface EditEx {
   equipment?: string;
   sets: string;
   reps: string;
+  rest: string;
   origSets?: number;
   origReps?: string;
+  origRest?: number;
   removed: boolean;
 }
 
@@ -75,8 +77,10 @@ export function MySplit() {
       equipment: e.fit_equipment,
       sets: String(e.fit_targetsets ?? 3),
       reps: e.fit_targetreps ?? '8-12',
+      rest: String(restOf(e)),
       origSets: e.fit_targetsets,
       origReps: e.fit_targetreps,
+      origRest: restOf(e),
       removed: false,
     })));
   }
@@ -97,8 +101,9 @@ export function MySplit() {
       for (const ex of editExs) {
         if (ex.removed) { await deletePlannedExercise(ex.id); continue; }
         const sets = parseInt(ex.sets, 10) || 0;
-        if (sets !== ex.origSets || ex.reps !== ex.origReps) {
-          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps });
+        const rest = parseInt(ex.rest, 10) || 0;
+        if (sets !== ex.origSets || ex.reps !== ex.origReps || rest !== ex.origRest) {
+          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps, fit_restsec: rest });
         }
       }
       await updateSplitDay(d.fit_splitdayid, {
@@ -171,7 +176,7 @@ export function MySplit() {
                 <div className="ms-head">
                   <div className="ms-head-main">
                     <div className="ms-title">{presetLabel(d)}{isCustomPreset(d) && <span className="ms-badge">Custom</span>}</div>
-                    <div className="ms-sub">{focusLabel(d.fit_focus)} · {exs.length} exercise{exs.length === 1 ? '' : 's'}</div>
+                    <div className="ms-sub">{focusLabel(d.fit_focus)} · {exs.length} exercise{exs.length === 1 ? '' : 's'}{exs.length ? ` · ${restSummary(exs)}` : ''}</div>
                   </div>
                   <button className="btn secondary sm" onClick={() => startEdit(d)} disabled={!!editingId} data-telemetry-name="edit-preset"><IconEdit size={15} /> Edit</button>
                 </div>
@@ -218,13 +223,19 @@ export function MySplit() {
                       </div>
                     </div>
                     <div className="ms-controls">
-                      <input className="input" value={ex.sets} title="Sets" disabled={ex.removed}
-                        onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
-                      <span style={{ color: 'var(--ink-3)' }}>×</span>
-                      <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
-                        onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
-                      <span className="spacer" style={{ flex: 1 }} />
-                      <button className="btn ghost sm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
+                      <label className="ms-fld"><span>Sets</span>
+                        <input className="input" inputMode="numeric" value={ex.sets} disabled={ex.removed}
+                          onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
+                      </label>
+                      <label className="ms-fld"><span>Reps</span>
+                        <input className="input reps" value={ex.reps} disabled={ex.removed}
+                          onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
+                      </label>
+                      <label className="ms-fld"><span>Rest (s)</span>
+                        <input className="input rest" inputMode="numeric" value={ex.rest} disabled={ex.removed}
+                          onChange={(e) => patchEx(ex.id, { rest: e.target.value.replace(/[^0-9]/g, '') })} data-telemetry-name="edit-rest" />
+                      </label>
+                      <button className="btn ghost sm ms-rm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
                         {ex.removed ? <IconPlus size={16} /> : <IconTrash size={16} />}
                       </button>
                     </div>

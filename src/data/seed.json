@@ -83,7 +83,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Curl"
+      "fit_name": "Barbell Curl",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -95,7 +96,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Hammer Curls"
+      "fit_name": "Hammer Curls",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -107,7 +109,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Preacher_Curl/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Preacher Curl"
+      "fit_name": "Cable Preacher Curl",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -119,7 +122,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Triceps Pushdown"
+      "fit_name": "Triceps Pushdown",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -131,7 +135,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Triceps Extension"
+      "fit_name": "Cable Triceps Extension",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-15",
@@ -143,7 +148,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Bench Dips"
+      "fit_name": "Bench Dips",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -155,7 +161,8 @@
       "fit_imageurl": null,
       "fit_targetsets": 3,
       "_fit_splitday_value": "32224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Palms-Down Dumbbell Wrist Curl Over A Bench"
+      "fit_name": "Palms-Down Dumbbell Wrist Curl Over A Bench",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "5",
@@ -167,7 +174,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Deadlift"
+      "fit_name": "Barbell Deadlift",
+      "fit_restsec": 150
     },
     {
       "fit_targetreps": "6-8",
@@ -179,7 +187,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Bench Press"
+      "fit_name": "Barbell Bench Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "6-8",
@@ -191,7 +200,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Overhead Barbell Press"
+      "fit_name": "Overhead Barbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "6-8",
@@ -203,7 +213,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Barbell Squat"
+      "fit_name": "Barbell Squat",
+      "fit_restsec": 150
     },
     {
       "fit_targetreps": "8-10",
@@ -215,7 +226,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Incline Barbell Press"
+      "fit_name": "Incline Barbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "5",
@@ -227,7 +239,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Deadlift"
+      "fit_name": "Barbell Deadlift",
+      "fit_restsec": 150
     },
     {
       "fit_targetreps": "8-10",
@@ -239,7 +252,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Romanian Deadlift"
+      "fit_name": "Romanian Deadlift",
+      "fit_restsec": 150
     },
     {
       "fit_targetreps": "8-10",
@@ -251,7 +265,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Shoulder Press"
+      "fit_name": "Dumbbell Shoulder Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-12",
@@ -263,7 +278,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Pull-Ups"
+      "fit_name": "Pull-Ups",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-12",
@@ -275,7 +291,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Pull-Ups"
+      "fit_name": "Pull-Ups",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-10",
@@ -287,7 +304,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Row"
+      "fit_name": "Dumbbell Row",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-10",
@@ -299,7 +317,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Incline Barbell Press"
+      "fit_name": "Incline Barbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-12",
@@ -311,7 +330,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Incline Dumbbell Press"
+      "fit_name": "Incline Dumbbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-10",
@@ -323,7 +343,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Bent-Over Barbell Row"
+      "fit_name": "Bent-Over Barbell Row",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-10",
@@ -335,7 +356,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Bent-Over Barbell Row"
+      "fit_name": "Bent-Over Barbell Row",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "10-12",
@@ -347,7 +369,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Leg Press"
+      "fit_name": "Leg Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-12",
@@ -359,7 +382,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Shoulder Press"
+      "fit_name": "Dumbbell Shoulder Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-12",
@@ -371,7 +395,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Arnold Press"
+      "fit_name": "Arnold Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "10-12",
@@ -383,7 +408,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Lat_Pulldown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Wide-Grip Lat Pulldown"
+      "fit_name": "Wide-Grip Lat Pulldown",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -395,7 +421,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Deltoid_Raise/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Lateral Raise"
+      "fit_name": "Dumbbell Lateral Raise",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -407,7 +434,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Walking_Lunge/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Walking Lunge"
+      "fit_name": "Walking Lunge",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -419,7 +447,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butterfly/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Pec Deck Fly"
+      "fit_name": "Pec Deck Fly",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -431,7 +460,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Front_Lat_Pulldown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Close-Grip Lat Pulldown"
+      "fit_name": "Close-Grip Lat Pulldown",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "10-12",
@@ -443,7 +473,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Lat_Pulldown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Wide-Grip Lat Pulldown"
+      "fit_name": "Wide-Grip Lat Pulldown",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -455,7 +486,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Rear_Delt_Row/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Rear Delt Row"
+      "fit_name": "Rear Delt Row",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -467,7 +499,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Barbell Hip Thrust"
+      "fit_name": "Barbell Hip Thrust",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -479,7 +512,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Crossover"
+      "fit_name": "Cable Crossover",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -491,7 +525,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Front_Lat_Pulldown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Close-Grip Lat Pulldown"
+      "fit_name": "Close-Grip Lat Pulldown",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -503,7 +538,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Crossover"
+      "fit_name": "Cable Crossover",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -515,7 +551,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Rear_Delt_Row/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Rear Delt Row"
+      "fit_name": "Rear Delt Row",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "15-20",
@@ -527,7 +564,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Band_Pull_Apart/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Band Pull-Apart"
+      "fit_name": "Band Pull-Apart",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -539,7 +577,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent-Arm_Dumbbell_Pullover/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Pullover"
+      "fit_name": "Dumbbell Pullover",
+      "fit_restsec": 90
     },
     {
       "fit_targetreps": "10-12",
@@ -551,7 +590,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Curl"
+      "fit_name": "Barbell Curl",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -563,7 +603,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Standing Calf Raise"
+      "fit_name": "Standing Calf Raise",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -575,7 +616,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_EZ_Bar_Curl/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "EZ-Bar Curl"
+      "fit_name": "EZ-Bar Curl",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -587,7 +629,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Dumbbell Row"
+      "fit_name": "Dumbbell Row",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -599,7 +642,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shrug/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "a55e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Shrug"
+      "fit_name": "Barbell Shrug",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "15-20",
@@ -611,7 +655,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Calf_Raise/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "48ff5a05-8072-f111-ab0f-6045bd049ce0",
-      "fit_name": "Seated Calf Raise"
+      "fit_name": "Seated Calf Raise",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -623,7 +668,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "4a224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Cable Triceps Extension"
+      "fit_name": "Cable Triceps Extension",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -635,7 +681,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shrug/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "c65e26bf-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Barbell Shrug"
+      "fit_name": "Barbell Shrug",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -647,7 +694,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "3e224902-8072-f111-ab0f-000d3a37eab2",
-      "fit_name": "Hammer Curls"
+      "fit_name": "Hammer Curls",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -659,7 +707,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bench_Dips/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "22fe0eb9-1973-f111-ab0f-000d3a37eab2",
-      "fit_name": "Bench Dips"
+      "fit_name": "Bench Dips",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "5-8",
@@ -671,7 +720,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Barbell Bench Press"
+      "fit_name": "Barbell Bench Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "8-10",
@@ -683,7 +733,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Incline Dumbbell Press"
+      "fit_name": "Incline Dumbbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "6-8",
@@ -695,7 +746,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shoulder_Press/0.jpg",
       "fit_targetsets": 4,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Overhead Barbell Press"
+      "fit_name": "Overhead Barbell Press",
+      "fit_restsec": 120
     },
     {
       "fit_targetreps": "12-15",
@@ -707,7 +759,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Alternating_Deltoid_Raise/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Dumbbell Lateral Raise"
+      "fit_name": "Dumbbell Lateral Raise",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "12-15",
@@ -719,7 +772,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Cable Crossover"
+      "fit_name": "Cable Crossover",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -731,7 +785,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Triceps Pushdown"
+      "fit_name": "Triceps Pushdown",
+      "fit_restsec": 45
     },
     {
       "fit_targetreps": "10-12",
@@ -743,7 +798,8 @@
       "fit_imageurl": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Lying_Triceps_Extension/0.jpg",
       "fit_targetsets": 3,
       "_fit_splitday_value": "bc377223-cad4-43cc-88b1-1dcf42381286",
-      "fit_name": "Cable Triceps Extension"
+      "fit_name": "Cable Triceps Extension",
+      "fit_restsec": 45
     }
   ]
 }

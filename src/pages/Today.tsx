@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSessions, createPreset, getStructure, invalidateStructure,
-  presetLabel, isCustomPreset, FOCUS, focusValue, weekRange, sessionDay,
+  presetLabel, isCustomPreset, restSummary, FOCUS, focusValue, weekRange, sessionDay,
   STATUS_COMPLETED,
   type WorkoutPlan, type SplitDay, type PlannedExercise, type WorkoutSession,
 } from '../lib/fitness';
@@ -22,6 +22,7 @@ export function Today() {
   const [plan, setPlan] = useState<WorkoutPlan | null>(null);
   const [presets, setPresets] = useState<SplitDay[]>([]);
   const [exCount, setExCount] = useState<Record<string, number>>({});
+  const [restMap, setRestMap] = useState<Record<string, string>>({});
   const [missingMap, setMissingMap] = useState<Record<string, number>>({});
   const [weekSessions, setWeekSessions] = useState<WorkoutSession[]>([]);
   const [creating, setCreating] = useState(false);
@@ -41,13 +42,16 @@ export function Today() {
       setPresets(structure.presets);
       const haveSet = new Set(equipment);
       const counts: Record<string, number> = {};
+      const rests: Record<string, string> = {};
       const missing: Record<string, number> = {};
       for (const sd of structure.presets) {
         const exs = structure.exByDay[sd.fit_splitdayid] || [];
         counts[sd.fit_splitdayid] = exs.length;
+        rests[sd.fit_splitdayid] = restSummary(exs);
         missing[sd.fit_splitdayid] = distinctEquipment(exs).filter((e) => !haveSet.has(e)).length;
       }
       setExCount(counts);
+      setRestMap(rests);
       setMissingMap(missing);
     }
   }
@@ -151,7 +155,7 @@ export function Today() {
             <div key={p.fit_splitdayid} className={`preset-tile${isCustomPreset(p) ? ' custom' : ''}`} onClick={() => nav(`/day/${p.fit_splitdayid}`)} data-telemetry-name="open-preset">
               {isCustomPreset(p) && <span className="pt-badge">Custom</span>}
               <div className="pt-name">{presetLabel(p)}</div>
-              <div className="pt-sub">{exCount[p.fit_splitdayid] ?? 0} exercises</div>
+              <div className="pt-sub">{exCount[p.fit_splitdayid] ?? 0} exercises{restMap[p.fit_splitdayid] ? ` · ${restMap[p.fit_splitdayid]}` : ''}</div>
               {missingMap[p.fit_splitdayid] > 0 && <div className="pt-gear">⚠ missing {missingMap[p.fit_splitdayid]} gear</div>}
             </div>
           ))}

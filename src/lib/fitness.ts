@@ -51,6 +51,19 @@ export const OOB_PRESET_IDS = new Set<string>([
 ]);
 export const isCustomPreset = (d: { fit_splitdayid?: string }) =>
   !!d.fit_splitdayid && !OOB_PRESET_IDS.has(d.fit_splitdayid);
+
+// Default rest (seconds) between sets when an exercise has no explicit value.
+export const DEFAULT_REST_SEC = 90;
+export const restOf = (ex: { fit_restsec?: number }) =>
+  ex.fit_restsec != null && ex.fit_restsec > 0 ? ex.fit_restsec : DEFAULT_REST_SEC;
+// Compact rest label for a preset card: a single value if every exercise rests
+// the same, otherwise the low–high range (e.g. "45–120s rest").
+export function restSummary(exs: { fit_restsec?: number }[]): string {
+  if (!exs.length) return '';
+  const r = exs.map(restOf);
+  const lo = Math.min(...r), hi = Math.max(...r);
+  return lo === hi ? `${lo}s rest` : `${lo}–${hi}s rest`;
+}
 export const STATUS_PLANNED = BASE;
 export const STATUS_INPROGRESS = BASE + 1;
 export const STATUS_COMPLETED = BASE + 2;
@@ -80,6 +93,7 @@ export interface PlannedExercise {
   fit_equipment?: string;
   fit_targetsets?: number;
   fit_targetreps?: string;
+  fit_restsec?: number;
   fit_imageurl?: string;
   fit_sortorder?: number;
   _fit_splitday_value?: string;
@@ -152,7 +166,7 @@ export const deleteSplitDay = (id: string) => remove(ES.day, id);
 // ---- Planned exercises ----
 export const getPlannedExercises = (splitDayId: string) =>
   list<PlannedExercise>(ES.exercise,
-    'fit_plannedexerciseid,fit_name,fit_exerciseexternalid,fit_primarymuscle,fit_equipment,fit_targetsets,fit_targetreps,fit_imageurl,fit_sortorder,_fit_splitday_value',
+    'fit_plannedexerciseid,fit_name,fit_exerciseexternalid,fit_primarymuscle,fit_equipment,fit_targetsets,fit_targetreps,fit_restsec,fit_imageurl,fit_sortorder,_fit_splitday_value',
     `_fit_splitday_value eq ${splitDayId}`, 'fit_sortorder asc');
 
 export const createPlannedExercise = (splitDayId: string, body: Partial<PlannedExercise>) =>
@@ -165,7 +179,7 @@ export const deletePlannedExercise = (id: string) => remove(ES.exercise, id);
 // Collapses the previous N+1 (one call per preset) into a single round-trip.
 export const getAllPlannedExercises = () =>
   list<PlannedExercise>(ES.exercise,
-    'fit_plannedexerciseid,fit_name,fit_exerciseexternalid,fit_primarymuscle,fit_equipment,fit_targetsets,fit_targetreps,fit_imageurl,fit_sortorder,_fit_splitday_value',
+    'fit_plannedexerciseid,fit_name,fit_exerciseexternalid,fit_primarymuscle,fit_equipment,fit_targetsets,fit_targetreps,fit_restsec,fit_imageurl,fit_sortorder,_fit_splitday_value',
     undefined, 'fit_sortorder asc', 500);
 
 // ---- In-memory structure cache (plan + presets + exercises) ----

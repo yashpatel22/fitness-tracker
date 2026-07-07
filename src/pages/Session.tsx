@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {
   getSession, getSplitDay, getPlannedExercises, getLogs, getAllLogs, createLog, updateLog, updateSession,
-  presetLabel, STATUS_COMPLETED, sessionDay, exerciseBests,
+  presetLabel, STATUS_COMPLETED, sessionDay, exerciseBests, restOf,
   type WorkoutSession, type SplitDay, type PlannedExercise, type ExerciseLog, type ExerciseBest,
 } from '../lib/fitness';
 import { useApp } from '../lib/appContext';
@@ -283,7 +283,9 @@ export function Session() {
         if (cur?.reps) patch.reps = cur.reps;
         if (Object.keys(patch).length) edit(ex.fit_plannedexerciseid, n + 1, patch);
       }
-      setRest({ exId: ex.fit_plannedexerciseid, endAt: Date.now() + restLen * 1000, total: restLen, remaining: restLen, done: false });
+      // Rest length is configured per exercise (higher-intensity lifts rest longer).
+      const rsec = restOf(ex);
+      setRest({ exId: ex.fit_plannedexerciseid, endAt: Date.now() + rsec * 1000, total: rsec, remaining: rsec, done: false });
     } else {
       setActive((prev) => ({ ...prev, [ex.fit_plannedexerciseid]: n }));
     }

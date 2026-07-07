@@ -263,9 +263,14 @@
 /* My Split row */
 .ms-exinfo { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; cursor: pointer; }
 .ms-row { flex-wrap: wrap; }
-.ms-controls { display: flex; align-items: center; gap: 8px; flex: 1 1 100%; padding-left: 62px; }
-.ms-controls .input { width: 52px; text-align: center; }
-.ms-controls .input.reps { width: 70px; }
+.ms-controls { display: flex; align-items: flex-end; gap: 10px; flex: 1 1 100%; margin-top: 10px; }
+.ms-fld { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ms-fld > span { font-size: 0.58rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); }
+.ms-controls .input { width: 100%; text-align: center; }
+.ms-controls .ms-fld:nth-child(1) { flex: 0 0 auto; width: 52px; }
+.ms-controls .ms-fld:nth-child(2) { flex: 1 1 auto; min-width: 56px; max-width: 92px; }
+.ms-controls .ms-fld:nth-child(3) { flex: 0 0 auto; width: 60px; }
+.ms-rm { flex: 0 0 auto; margin-left: auto; }
 
 /* Presets screen — read-only cards + per-preset edit mode */
 .ms-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
