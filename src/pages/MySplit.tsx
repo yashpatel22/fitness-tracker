@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
@@ -22,8 +22,10 @@ interface EditEx {
   equipment?: string;
   sets: string;
   reps: string;
+  rest: string;
   origSets?: number;
   origReps?: string;
+  origRest?: number;
   removed: boolean;
 }
 
@@ -44,28 +46,6 @@ export function MySplit() {
   const [creating, setCreating] = useState(false);
   const [newFocus, setNewFocus] = useState('Arms');
   const [newName, setNewName] = useState('');
-
-  // Inline per-exercise rest editing (read-only card). Optimistic UI + debounced
-  // persist so tapping ± feels instant and only writes once you stop.
-  const restRef = useRef<Record<string, number>>({});
-  const restTimers = useRef<Record<string, number>>({});
-  function bumpExRest(d: SplitDay, ex: PlannedExercise, delta: number) {
-    const k = ex.fit_plannedexerciseid;
-    const base = restRef.current[k] ?? restOf(ex);
-    const next = Math.max(15, Math.min(600, base + delta));
-    restRef.current[k] = next;
-    setExMap((prev) => ({
-      ...prev,
-      [d.fit_splitdayid]: (prev[d.fit_splitdayid] || []).map((e) =>
-        e.fit_plannedexerciseid === k ? { ...e, fit_restsec: next } : e),
-    }));
-    if (restTimers.current[k]) window.clearTimeout(restTimers.current[k]);
-    restTimers.current[k] = window.setTimeout(async () => {
-      try { await updatePlannedExercise(k, { fit_restsec: next }); invalidateStructure(); }
-      catch (e) { toast((e as Error).message, 'err'); }
-      finally { delete restRef.current[k]; }
-    }, 500);
-  }
 
   async function reload(force = false) {
     const s = await getStructure(force);
@@ -97,8 +77,10 @@ export function MySplit() {
       equipment: e.fit_equipment,
       sets: String(e.fit_targetsets ?? 3),
       reps: e.fit_targetreps ?? '8-12',
+      rest: String(restOf(e)),
       origSets: e.fit_targetsets,
       origReps: e.fit_targetreps,
+      origRest: restOf(e),
       removed: false,
     })));
   }
@@ -108,6 +90,13 @@ export function MySplit() {
   }
   function patchEx(id: string, patch: Partial<EditEx>) {
     setEditExs((prev) => prev.map((e) => (e.id === id ? { ...e, ...patch } : e)));
+  }
+  function bumpEditRest(id: string, delta: number) {
+    setEditExs((prev) => prev.map((e) => {
+      if (e.id !== id) return e;
+      const next = Math.max(15, Math.min(600, (parseInt(e.rest, 10) || 0) + delta));
+      return { ...e, rest: String(next) };
+    }));
   }
   function toggleRemove(id: string) {
     setEditExs((prev) => prev.map((e) => (e.id === id ? { ...e, removed: !e.removed } : e)));
@@ -119,8 +108,9 @@ export function MySplit() {
       for (const ex of editExs) {
         if (ex.removed) { await deletePlannedExercise(ex.id); continue; }
         const sets = parseInt(ex.sets, 10) || 0;
-        if (sets !== ex.origSets || ex.reps !== ex.origReps) {
-          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps });
+        const rest = parseInt(ex.rest, 10) || 0;
+        if (sets !== ex.origSets || ex.reps !== ex.origReps || rest !== ex.origRest) {
+          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps, fit_restsec: rest });
         }
       }
       await updateSplitDay(d.fit_splitdayid, {
@@ -205,11 +195,7 @@ export function MySplit() {
                         <div className="t">{ex.fit_name}</div>
                         <div className="s">{ex.fit_targetsets} × {ex.fit_targetreps} · {ex.fit_primarymuscle}</div>
                       </div>
-                      <div className="ms-rest-step" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => bumpExRest(d, ex, -15)} aria-label="Less rest" data-telemetry-name="rest-minus-inline">−</button>
-                        <span className="ms-rest-val">{restOf(ex)}s<em>rest</em></span>
-                        <button onClick={() => bumpExRest(d, ex, 15)} aria-label="More rest" data-telemetry-name="rest-plus-inline">+</button>
-                      </div>
+                      <span className="ms-rest-ro">{restOf(ex)}s<em>rest</em></span>
                     </div>
                   ))}
                   {!exs.length && <div className="ms-empty">No exercises yet — tap Edit to add some.</div>}
@@ -250,6 +236,11 @@ export function MySplit() {
                       <span style={{ color: 'var(--ink-3)' }}>×</span>
                       <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
                         onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
+                      <div className="ms-rest-step" title="Rest between sets">
+                        <button onClick={() => bumpEditRest(ex.id, -15)} disabled={ex.removed} aria-label="Less rest" data-telemetry-name="edit-rest-minus">−</button>
+                        <span className="ms-rest-val">{ex.rest}s<em>rest</em></span>
+                        <button onClick={() => bumpEditRest(ex.id, 15)} disabled={ex.removed} aria-label="More rest" data-telemetry-name="edit-rest-plus">+</button>
+                      </div>
                       <span className="spacer" style={{ flex: 1 }} />
                       <button className="btn ghost sm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
                         {ex.removed ? <IconPlus size={16} /> : <IconTrash size={16} />}
