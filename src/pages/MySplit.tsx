@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
@@ -22,10 +22,8 @@ interface EditEx {
   equipment?: string;
   sets: string;
   reps: string;
-  rest: string;
   origSets?: number;
   origReps?: string;
-  origRest?: number;
   removed: boolean;
 }
 
@@ -46,6 +44,28 @@ export function MySplit() {
   const [creating, setCreating] = useState(false);
   const [newFocus, setNewFocus] = useState('Arms');
   const [newName, setNewName] = useState('');
+
+  // Inline per-exercise rest editing (read-only card). Optimistic UI + debounced
+  // persist so tapping ± feels instant and only writes once you stop.
+  const restRef = useRef<Record<string, number>>({});
+  const restTimers = useRef<Record<string, number>>({});
+  function bumpExRest(d: SplitDay, ex: PlannedExercise, delta: number) {
+    const k = ex.fit_plannedexerciseid;
+    const base = restRef.current[k] ?? restOf(ex);
+    const next = Math.max(15, Math.min(600, base + delta));
+    restRef.current[k] = next;
+    setExMap((prev) => ({
+      ...prev,
+      [d.fit_splitdayid]: (prev[d.fit_splitdayid] || []).map((e) =>
+        e.fit_plannedexerciseid === k ? { ...e, fit_restsec: next } : e),
+    }));
+    if (restTimers.current[k]) window.clearTimeout(restTimers.current[k]);
+    restTimers.current[k] = window.setTimeout(async () => {
+      try { await updatePlannedExercise(k, { fit_restsec: next }); invalidateStructure(); }
+      catch (e) { toast((e as Error).message, 'err'); }
+      finally { delete restRef.current[k]; }
+    }, 500);
+  }
 
   async function reload(force = false) {
     const s = await getStructure(force);
@@ -77,10 +97,8 @@ export function MySplit() {
       equipment: e.fit_equipment,
       sets: String(e.fit_targetsets ?? 3),
       reps: e.fit_targetreps ?? '8-12',
-      rest: String(restOf(e)),
       origSets: e.fit_targetsets,
       origReps: e.fit_targetreps,
-      origRest: restOf(e),
       removed: false,
     })));
   }
@@ -101,9 +119,8 @@ export function MySplit() {
       for (const ex of editExs) {
         if (ex.removed) { await deletePlannedExercise(ex.id); continue; }
         const sets = parseInt(ex.sets, 10) || 0;
-        const rest = parseInt(ex.rest, 10) || 0;
-        if (sets !== ex.origSets || ex.reps !== ex.origReps || rest !== ex.origRest) {
-          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps, fit_restsec: rest });
+        if (sets !== ex.origSets || ex.reps !== ex.origReps) {
+          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps });
         }
       }
       await updateSplitDay(d.fit_splitdayid, {
@@ -182,11 +199,16 @@ export function MySplit() {
                 </div>
                 <div className="list ms-ro-list">
                   {exs.map((ex) => (
-                    <div key={ex.fit_plannedexerciseid} className="list-row tappable" onClick={() => ex.fit_exerciseexternalid && nav(`/exercise/${encodeURIComponent(ex.fit_exerciseexternalid)}`)} data-telemetry-name="open-exercise">
+                    <div key={ex.fit_plannedexerciseid} className="list-row tappable ms-ro-row" onClick={() => ex.fit_exerciseexternalid && nav(`/exercise/${encodeURIComponent(ex.fit_exerciseexternalid)}`)} data-telemetry-name="open-exercise">
                       <Thumb url={plannedImage(ex.fit_exerciseexternalid)} alt={ex.fit_name} />
                       <div className="grow">
                         <div className="t">{ex.fit_name}</div>
                         <div className="s">{ex.fit_targetsets} × {ex.fit_targetreps} · {ex.fit_primarymuscle}</div>
+                      </div>
+                      <div className="ms-rest-step" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => bumpExRest(d, ex, -15)} aria-label="Less rest" data-telemetry-name="rest-minus-inline">−</button>
+                        <span className="ms-rest-val">{restOf(ex)}s<em>rest</em></span>
+                        <button onClick={() => bumpExRest(d, ex, 15)} aria-label="More rest" data-telemetry-name="rest-plus-inline">+</button>
                       </div>
                     </div>
                   ))}
@@ -223,19 +245,13 @@ export function MySplit() {
                       </div>
                     </div>
                     <div className="ms-controls">
-                      <label className="ms-fld"><span>Sets</span>
-                        <input className="input" inputMode="numeric" value={ex.sets} disabled={ex.removed}
-                          onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
-                      </label>
-                      <label className="ms-fld"><span>Reps</span>
-                        <input className="input reps" value={ex.reps} disabled={ex.removed}
-                          onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
-                      </label>
-                      <label className="ms-fld"><span>Rest (s)</span>
-                        <input className="input rest" inputMode="numeric" value={ex.rest} disabled={ex.removed}
-                          onChange={(e) => patchEx(ex.id, { rest: e.target.value.replace(/[^0-9]/g, '') })} data-telemetry-name="edit-rest" />
-                      </label>
-                      <button className="btn ghost sm ms-rm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
+                      <input className="input" value={ex.sets} title="Sets" disabled={ex.removed}
+                        onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
+                      <span style={{ color: 'var(--ink-3)' }}>×</span>
+                      <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
+                        onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
+                      <span className="spacer" style={{ flex: 1 }} />
+                      <button className="btn ghost sm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
                         {ex.removed ? <IconPlus size={16} /> : <IconTrash size={16} />}
                       </button>
                     </div>
