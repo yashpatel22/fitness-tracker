@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
@@ -86,6 +86,36 @@ export function MySplit() {
     dragIdRef.current = null;
     setDragId(null);
   }
+
+  // FLIP animation: after the staged list reorders, every row that changed
+  // position glides from its old spot to its new one, so the tiles below the one
+  // you're dragging flow fluidly instead of snapping. We record each row's top on
+  // every render (keyed by exercise id) and, when it moves, invert+play the delta.
+  const rowTops = useRef<Record<string, number>>({});
+  useLayoutEffect(() => {
+    const listEl = listRef.current;
+    if (!listEl) { rowTops.current = {}; return; }
+    const prev = rowTops.current;
+    const next: Record<string, number> = {};
+    for (const row of Array.from(listEl.querySelectorAll<HTMLElement>('.ms-row'))) {
+      const id = row.dataset.exid || '';
+      // offsetTop is the untransformed layout position, so FLIP stays accurate
+      // even while a previous reorder's transition is still animating.
+      const top = row.offsetTop;
+      next[id] = top;
+      const old = prev[id];
+      if (old != null && old !== top) {
+        const dy = old - top;
+        row.style.transition = 'none';
+        row.style.transform = `translateY(${dy}px)`;
+        requestAnimationFrame(() => {
+          row.style.transition = 'transform 220ms cubic-bezier(0.2, 0, 0, 1)';
+          row.style.transform = '';
+        });
+      }
+    }
+    rowTops.current = next;
+  });
 
   async function reload(force = false) {
     const s = await getStructure(force);
@@ -268,30 +298,33 @@ export function MySplit() {
               <div className="ms-edit-exhead"><span>Exercises</span><span className="pill">{kept}</span></div>
               <div className="list" ref={listRef}>
                 {editExs.map((ex) => (
-                  <div key={ex.id} className={`list-row ms-row ${ex.removed ? 'removed' : ''} ${dragId === ex.id ? 'dragging' : ''}`}>
-                    <button className="ms-grip" onPointerDown={(e) => onGripDown(e, ex.id)} onPointerMove={onGripMove} onPointerUp={onGripUp} onClick={(e) => e.stopPropagation()} disabled={ex.removed} aria-label="Drag to reorder" title="Drag to reorder" data-telemetry-name="reorder-grip">
-                      <IconGrip size={18} />
-                    </button>
-                    <div className="ms-exinfo" onClick={() => ex.extId && nav(`/exercise/${encodeURIComponent(ex.extId)}`)} data-telemetry-name="open-exercise">
-                      <Thumb url={plannedImage(ex.extId)} alt={ex.name} />
-                      <div className="grow">
-                        <div className="t">{ex.name}</div>
-                        <div className="s">{ex.muscle}{ex.equipment ? ` · ${ex.equipment}` : ''}</div>
+                  <div key={ex.id} data-exid={ex.id} className={`list-row ms-row ${ex.removed ? 'removed' : ''} ${dragId === ex.id ? 'dragging' : ''}`}>
+                    <div className="ms-main">
+                      <div className="ms-exinfo" onClick={() => ex.extId && nav(`/exercise/${encodeURIComponent(ex.extId)}`)} data-telemetry-name="open-exercise">
+                        <Thumb url={plannedImage(ex.extId)} alt={ex.name} />
+                        <div className="grow">
+                          <div className="t">{ex.name}</div>
+                          <div className="s">{ex.muscle}{ex.equipment ? ` · ${ex.equipment}` : ''}</div>
+                        </div>
+                      </div>
+                      <div className="ms-controls">
+                        <input className="input" value={ex.sets} title="Sets" disabled={ex.removed}
+                          onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
+                        <span style={{ color: 'var(--ink-3)' }}>×</span>
+                        <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
+                          onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
+                        <div className="ms-rest-step" title="Rest between sets">
+                          <button onClick={() => bumpEditRest(ex.id, -15)} disabled={ex.removed} aria-label="Less rest" data-telemetry-name="edit-rest-minus">−</button>
+                          <span className="ms-rest-val">{ex.rest}s<em>rest</em></span>
+                          <button onClick={() => bumpEditRest(ex.id, 15)} disabled={ex.removed} aria-label="More rest" data-telemetry-name="edit-rest-plus">+</button>
+                        </div>
                       </div>
                     </div>
-                    <div className="ms-controls">
-                      <input className="input" value={ex.sets} title="Sets" disabled={ex.removed}
-                        onChange={(e) => patchEx(ex.id, { sets: e.target.value })} data-telemetry-name="edit-sets" />
-                      <span style={{ color: 'var(--ink-3)' }}>×</span>
-                      <input className="input reps" value={ex.reps} title="Reps" disabled={ex.removed}
-                        onChange={(e) => patchEx(ex.id, { reps: e.target.value })} data-telemetry-name="edit-reps" />
-                      <div className="ms-rest-step" title="Rest between sets">
-                        <button onClick={() => bumpEditRest(ex.id, -15)} disabled={ex.removed} aria-label="Less rest" data-telemetry-name="edit-rest-minus">−</button>
-                        <span className="ms-rest-val">{ex.rest}s<em>rest</em></span>
-                        <button onClick={() => bumpEditRest(ex.id, 15)} disabled={ex.removed} aria-label="More rest" data-telemetry-name="edit-rest-plus">+</button>
-                      </div>
-                      <span className="spacer" style={{ flex: 1 }} />
-                      <button className="btn ghost sm" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
+                    <div className="ms-actions">
+                      <button className="ms-grip" onPointerDown={(e) => onGripDown(e, ex.id)} onPointerMove={onGripMove} onPointerUp={onGripUp} onClick={(e) => e.stopPropagation()} disabled={ex.removed} aria-label="Drag to reorder" title="Drag to reorder" data-telemetry-name="reorder-grip">
+                        <IconGrip size={18} />
+                      </button>
+                      <button className="btn ghost sm ms-remove" onClick={() => toggleRemove(ex.id)} title={ex.removed ? 'Keep' : 'Remove'} data-telemetry-name="remove-exercise">
                         {ex.removed ? <IconPlus size={16} /> : <IconTrash size={16} />}
                       </button>
                     </div>
