@@ -263,6 +263,12 @@
 /* My Split row */
 .ms-exinfo { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; cursor: pointer; }
 .ms-row { flex-wrap: wrap; }
+/* Drag-to-reorder handle (edit mode). touch-action:none so dragging the grip
+   reorders instead of scrolling the page on touch devices. */
+.ms-grip { flex: 0 0 auto; width: 26px; align-self: center; display: grid; place-items: center; border: none; background: transparent; color: var(--ink-3); cursor: grab; touch-action: none; padding: 0; margin-right: 2px; }
+.ms-grip:active { cursor: grabbing; }
+.ms-grip:disabled { opacity: 0.3; cursor: default; }
+.ms-row.dragging { background: var(--paper-2); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); position: relative; z-index: 2; border-radius: var(--r); }
 .ms-controls { display: flex; align-items: center; gap: 8px; flex: 1 1 100%; padding-left: 8px; }
 .ms-controls .input { width: 48px; text-align: center; }
 .ms-controls .input.reps { width: 62px; }

@@ -63,3 +63,6 @@ export const IconUser = ({ size }: P) => (
 export const IconTrophy = ({ size }: P) => (
   <svg {...S(size)}><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z" /><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3" /></svg>
 );
+export const IconGrip = ({ size }: P) => (
+  <svg {...S(size)} strokeWidth={0} fill="currentColor"><circle cx="9" cy="6" r="1.5" /><circle cx="15" cy="6" r="1.5" /><circle cx="9" cy="12" r="1.5" /><circle cx="15" cy="12" r="1.5" /><circle cx="9" cy="18" r="1.5" /><circle cx="15" cy="18" r="1.5" /></svg>
+);

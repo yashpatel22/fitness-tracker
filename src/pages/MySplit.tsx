@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   updatePlannedExercise, deletePlannedExercise,
@@ -9,7 +9,7 @@ import {
 import { useApp } from '../lib/appContext';
 import { plannedImage } from '../lib/exerciseDb';
 import { Loader, Empty, Thumb, Modal } from '../ui/common';
-import { IconTrash, IconPlus, IconEdit, IconCheck, IconX } from '../ui/icons';
+import { IconTrash, IconPlus, IconEdit, IconCheck, IconX, IconGrip } from '../ui/icons';
 
 // A staged copy of one exercise while its preset is being edited. Nothing is
 // written to the backend until "Save preset" — so removals/edits are reversible
@@ -26,6 +26,7 @@ interface EditEx {
   origSets?: number;
   origReps?: string;
   origRest?: number;
+  origSort?: number;
   removed: boolean;
 }
 
@@ -46,6 +47,45 @@ export function MySplit() {
   const [creating, setCreating] = useState(false);
   const [newFocus, setNewFocus] = useState('Arms');
   const [newName, setNewName] = useState('');
+
+  // ---- Drag-to-reorder (edit mode only) ----
+  // Pointer-based so it works with touch on the installed PWA. A grip handle
+  // captures the pointer; as it moves over other rows we splice the staged
+  // editExs into the new order. Order is committed (fit_sortorder) on Save.
+  const listRef = useRef<HTMLDivElement>(null);
+  const dragIdRef = useRef<string | null>(null);
+  const [dragId, setDragId] = useState<string | null>(null);
+
+  function onGripDown(e: React.PointerEvent, id: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch { /* ignore */ }
+    dragIdRef.current = id;
+    setDragId(id);
+  }
+  function onGripMove(e: React.PointerEvent) {
+    if (!dragIdRef.current || !listRef.current) return;
+    const rows = Array.from(listRef.current.querySelectorAll<HTMLElement>('.ms-row'));
+    const y = e.clientY;
+    let target = rows.length - 1;
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i].getBoundingClientRect();
+      if (y < r.top + r.height / 2) { target = i; break; }
+    }
+    setEditExs((prev) => {
+      const from = prev.findIndex((x) => x.id === dragIdRef.current);
+      if (from < 0 || target < 0 || target >= prev.length || from === target) return prev;
+      const next = prev.slice();
+      const [it] = next.splice(from, 1);
+      next.splice(target, 0, it);
+      return next;
+    });
+  }
+  function onGripUp(e: React.PointerEvent) {
+    try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* ignore */ }
+    dragIdRef.current = null;
+    setDragId(null);
+  }
 
   async function reload(force = false) {
     const s = await getStructure(force);
@@ -81,6 +121,7 @@ export function MySplit() {
       origSets: e.fit_targetsets,
       origReps: e.fit_targetreps,
       origRest: restOf(e),
+      origSort: e.fit_sortorder,
       removed: false,
     })));
   }
@@ -105,13 +146,18 @@ export function MySplit() {
   async function saveEdit(d: SplitDay): Promise<boolean> {
     setSaving(true);
     try {
+      let pos = 0;
       for (const ex of editExs) {
         if (ex.removed) { await deletePlannedExercise(ex.id); continue; }
+        pos += 1;
         const sets = parseInt(ex.sets, 10) || 0;
         const rest = parseInt(ex.rest, 10) || 0;
+        const body: Partial<PlannedExercise> = {};
         if (sets !== ex.origSets || ex.reps !== ex.origReps || rest !== ex.origRest) {
-          await updatePlannedExercise(ex.id, { fit_targetsets: sets, fit_targetreps: ex.reps, fit_restsec: rest });
+          body.fit_targetsets = sets; body.fit_targetreps = ex.reps; body.fit_restsec = rest;
         }
+        if (pos !== ex.origSort) body.fit_sortorder = pos;
+        if (Object.keys(body).length) await updatePlannedExercise(ex.id, body);
       }
       await updateSplitDay(d.fit_splitdayid, {
         fit_name: editName.trim() || focusLabel(focusValue(editFocus)),
@@ -220,9 +266,12 @@ export function MySplit() {
               </div>
 
               <div className="ms-edit-exhead"><span>Exercises</span><span className="pill">{kept}</span></div>
-              <div className="list">
+              <div className="list" ref={listRef}>
                 {editExs.map((ex) => (
-                  <div key={ex.id} className={`list-row ms-row ${ex.removed ? 'removed' : ''}`}>
+                  <div key={ex.id} className={`list-row ms-row ${ex.removed ? 'removed' : ''} ${dragId === ex.id ? 'dragging' : ''}`}>
+                    <button className="ms-grip" onPointerDown={(e) => onGripDown(e, ex.id)} onPointerMove={onGripMove} onPointerUp={onGripUp} onClick={(e) => e.stopPropagation()} disabled={ex.removed} aria-label="Drag to reorder" title="Drag to reorder" data-telemetry-name="reorder-grip">
+                      <IconGrip size={18} />
+                    </button>
                     <div className="ms-exinfo" onClick={() => ex.extId && nav(`/exercise/${encodeURIComponent(ex.extId)}`)} data-telemetry-name="open-exercise">
                       <Thumb url={plannedImage(ex.extId)} alt={ex.name} />
                       <div className="grow">
