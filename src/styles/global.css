@@ -321,7 +321,8 @@
 
 /* ---------- Heatmap ---------- */
 .heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.heatmap .cell { aspect-ratio: 1; background: var(--paper-2); border: 1px solid var(--line); }
+.heatmap .cell { aspect-ratio: 1; background: var(--paper-2); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 1px; }
+.heatmap .cell-label { font-size: 9px; line-height: 1.05; font-weight: 700; color: #fff; text-align: center; letter-spacing: -0.2px; word-break: break-word; text-transform: uppercase; }
 .heatmap .cell.l1 { background: #fbc3c6; border-color: #fbc3c6; }
 .heatmap .cell.l2 { background: #f77a82; border-color: #f77a82; }
 .heatmap .cell.l3 { background: var(--red); border-color: var(--red); }

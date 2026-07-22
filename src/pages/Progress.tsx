@@ -94,15 +94,21 @@ export function Progress() {
   // 49-day heatmap (7 weeks).
   const heat = useMemo(() => {
     const counts: Record<string, number> = {};
-    sessions.forEach((s) => { const d = sessionDay(s.fit_sessiondate).format('YYYY-MM-DD'); counts[d] = (counts[d] || 0) + 1; });
-    const cells: { date: string; n: number }[] = [];
+    const labels: Record<string, string[]> = {};
+    sessions.forEach((s) => {
+      const d = sessionDay(s.fit_sessiondate).format('YYYY-MM-DD');
+      counts[d] = (counts[d] || 0) + 1;
+      (labels[d] ||= []).push(sessionFocusLabel(s, daysById));
+    });
+    const cells: { date: string; n: number; label: string }[] = [];
     const start = dayjs().subtract(48, 'day');
     for (let i = 0; i < 49; i++) {
       const d = start.add(i, 'day').format('YYYY-MM-DD');
-      cells.push({ date: d, n: counts[d] || 0 });
+      const uniq = Array.from(new Set(labels[d] || []));
+      cells.push({ date: d, n: counts[d] || 0, label: uniq.join(' + ') });
     }
     return cells;
-  }, [sessions]);
+  }, [sessions, daysById]);
 
   const fmtVol = (lb: number) => `${Math.round(fromLb(lb, unit)).toLocaleString()} ${unit}`;
 
@@ -129,7 +135,9 @@ export function Progress() {
         <div className="section-head"><h2>Consistency · last 7 weeks</h2></div>
         <div className="card"><div className="heatmap">
           {heat.map((c) => (
-            <div key={c.date} className={`cell ${c.n >= 2 ? 'l3' : c.n === 1 ? 'l2' : ''}`} title={`${c.date}: ${c.n} workout${c.n === 1 ? '' : 's'}`} />
+            <div key={c.date} className={`cell ${c.n >= 2 ? 'l3' : c.n === 1 ? 'l2' : ''}`} title={`${c.date}: ${c.n} workout${c.n === 1 ? '' : 's'}${c.label ? ' · ' + c.label : ''}`}>
+              {c.n > 0 && c.label && <span className="cell-label">{c.label}</span>}
+            </div>
           ))}
         </div></div>
       </section>
