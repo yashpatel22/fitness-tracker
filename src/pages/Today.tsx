@@ -78,7 +78,9 @@ export function Today() {
   const dots = Array.from({ length: 7 }, (_, i) => {
     const d = monday.add(i, 'day');
     const key = d.format('YYYY-MM-DD');
-    return { letter: DOW_LETTERS[i], done: workedDates.has(key), isToday: d.isSame(dayjs(), 'day'), session: sessionByDate[key] };
+    const sess = sessionByDate[key];
+    const preset = sess ? presets.find((x) => x.fit_splitdayid === sess._fit_splitday_value) : undefined;
+    return { letter: DOW_LETTERS[i], done: workedDates.has(key), isToday: d.isSame(dayjs(), 'day'), session: sess, preset: preset ? presetLabel(preset) : '' };
   });
   const inProgress = weekSessions.find((s) => s.fit_status !== STATUS_COMPLETED);
 
@@ -127,7 +129,7 @@ export function Today() {
                 role={d.session ? 'button' : undefined}
                 data-telemetry-name={d.session ? 'open-day-session' : undefined}
               >
-                <span className="wd-dot">{d.done ? '✓' : ''}</span>
+                <span className="wd-dot">{d.preset ? <span className="wd-name">{d.preset}</span> : (d.done ? '✓' : '')}</span>
                 <span className="wd-l">{d.letter}</span>
               </div>
             ))}

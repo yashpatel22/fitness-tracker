@@ -153,7 +153,9 @@
 .week-note { font-size: 0.78rem; font-weight: 700; color: var(--ink-2); }
 .week-dots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
 .wd { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.wd-dot { width: 100%; aspect-ratio: 1; max-width: 40px; display: grid; place-items: center; border: 1.5px solid var(--line); background: var(--paper-2); color: #fff; font-weight: 800; font-size: 0.9rem; }
+.wd-dot { width: 100%; aspect-ratio: 1; max-width: 40px; display: grid; place-items: center; border: 1.5px solid var(--line); background: var(--paper-2); color: #fff; font-weight: 800; font-size: 0.9rem; overflow: hidden; padding: 1px; }
+.wd-name { font-size: 10px; line-height: 0.95; font-weight: 800; text-align: center; text-transform: uppercase; letter-spacing: -0.5px; word-break: break-word; overflow: hidden; max-width: 100%; max-height: 100%; color: var(--ink); }
+.wd.on .wd-name { color: #fff; }
 .wd.on .wd-dot { background: var(--green); border-color: var(--green); }
 .wd.today .wd-dot { border-color: var(--ink); border-width: 2px; }
 .wd-l { font-size: 0.66rem; font-weight: 800; color: var(--ink-3); }
